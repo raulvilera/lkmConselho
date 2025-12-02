@@ -43,13 +43,17 @@
         header {
             background: linear-gradient(135deg, var(--primary-color), #1a252f);
             color: white;
-            padding: 18px 15px;
+            padding: 15px 20px;
             text-align: center;
             border-radius: 12px 12px 0 0;
             margin-bottom: 25px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
         }
         
         header::before {
@@ -62,11 +66,47 @@
             background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
         }
         
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+        
         h1 {
             font-size: clamp(1.5rem, 4vw, 2.2rem);
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
             margin: 0;
             line-height: 1.2;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: 20px;
+        }
+        
+        .logo-img {
+            height: 70px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
         }
         
         .controls-panel {
@@ -602,7 +642,92 @@
             background: linear-gradient(135deg, #229954, #27ae60);
         }
 
-        /* AJUSTES RESPONSIVOS */
+        /* AJUSTES RESPONSIVOS PARA O HEADER COM LOGO */
+        @media (max-width: 1200px) {
+            .logo-img {
+                height: 60px;
+                max-width: 160px;
+            }
+            
+            h1 {
+                font-size: clamp(1.4rem, 3.5vw, 2rem);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .header-title {
+                order: 2;
+            }
+            
+            .header-logo {
+                order: 1;
+                margin-left: 0;
+                justify-content: center;
+            }
+            
+            .logo-img {
+                height: 55px;
+                max-width: 150px;
+            }
+            
+            h1 {
+                font-size: clamp(1.3rem, 3vw, 1.8rem);
+            }
+            
+            header {
+                min-height: auto;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 50px;
+                max-width: 130px;
+            }
+            
+            h1 {
+                font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+            }
+            
+            header {
+                padding: 12px 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo-img {
+                height: 45px;
+                max-width: 120px;
+            }
+            
+            h1 {
+                font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            }
+            
+            .header-content {
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo-img {
+                height: 40px;
+                max-width: 100px;
+            }
+            
+            h1 {
+                font-size: 1rem;
+            }
+        }
+        
+        /* AJUSTES RESPONSIVOS PARA OS CARDS */
         @media (max-width: 1600px) {
             .bimester-card {
                 height: 650px;
@@ -789,12 +914,12 @@
             }
             
             header {
-                padding: 15px 10px;
+                padding: 12px 10px;
                 margin-bottom: 20px;
             }
             
             .controls-panel {
-                padding: 15px 12px;
+                padding: 12px 10px;
                 margin-bottom: 20px;
             }
             
@@ -854,12 +979,12 @@
             }
             
             header {
-                padding: 12px 8px;
+                padding: 10px 8px;
                 border-radius: 8px 8px 0 0;
             }
             
             .controls-panel {
-                padding: 12px 10px;
+                padding: 10px 8px;
                 border-radius: 8px;
                 gap: 10px;
             }
@@ -935,7 +1060,7 @@
             }
             
             .controls-panel {
-                padding: 10px 8px;
+                padding: 8px 6px;
             }
             
             .nav-btn {
@@ -992,7 +1117,14 @@
 <body>
     <div class="container">
         <header>
-            <h1>SISTEMA INTEGRADO CONSELHO DE CLASSE</h1>
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>SISTEMA INTEGRADO CONSELHO DE CLASSE</h1>
+                </div>
+                <div class="header-logo">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgGhY6RLoDObF8Jg1o51aAdyFPLoepsOsVywciVuwsBk5MCABVg8nR3wESStKY_Wd4oZUEH2qCLoEWtUcMnbnm6GlArlRPAScb1zAwTYAfPvtulEtY3DnHv4BKCB95BxnEDiCLGZOynbPg6HhhtMstV7KTnX2Ndy4iZ1rJPbWL-DE8otMkK4jKMSLfjXWKa/s100/Capturar-removebg-preview%20%281%29.png" alt="LKM Logo" class="logo-img">
+                </div>
+            </div>
         </header>
         
         <div class="controls-panel">
