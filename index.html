@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Conselho de Classe</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --nota-baixa: #ff5252;
+            --nota-alta: #2196f3;
+            --faltas-cor: #ff9800;
+            --card-bg: #4a5568;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 100%;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1a252f);
+            color: white;
+            padding: 18px 15px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+        }
+        
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .controls-panel {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 18px 20px 23px;
+            border-radius: 12px;
+            box-shadow: 
+                0 8px 25px rgba(0,0,0,0.1),
+                0 4px 6px rgba(0,0,0,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.5);
+            margin-top: -12px;
+        }
+        
+        .controls-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 2%;
+            right: 2%;
+            height: 18px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+            border-radius: 50%;
+            filter: blur(8px);
+            z-index: -1;
+        }
+        
+        .nav-btn {
+            padding: 12px 15px;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 
+                0 5px 0 #1a5276,
+                0 8px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(145deg, #3498db, #2980b9);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 120px;
+            flex: 1;
+            max-width: 200px;
+            white-space: nowrap;
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(145deg, #3cb0fd, #3498db);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 0 #1a5276,
+                0 12px 20px rgba(0,0,0,0.25);
+        }
+        
+        .nav-btn:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 1px 0 #1a5276,
+                0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: linear-gradient(145deg, #bdc3c7, #95a5a6);
+            box-shadow: 
+                0 4px 0 #7f8c8d,
+                0 6px 10px rgba(0,0,0,0.1);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .nav-btn:disabled:active {
+            transform: none;
+            box-shadow: 
+                0 4px 0 #7f8c8d,
+                0 6px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn.prev {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            box-shadow: 
+                0 5px 0 #a93226,
+                0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.prev:hover {
+            background: linear-gradient(145deg, #ec7063, #e74c3c);
+        }
+        
+        .controls-center {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 15px;
+            flex: 3;
+            min-width: 0;
+            justify-content: center;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group.turma {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .form-group.aluno {
+            flex: 2;
+            min-width: 250px;
+        }
+        
+        .form-group.btn-container {
+            flex: 0 1 auto;
+            min-width: 140px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+            white-space: nowrap;
+        }
+        
+        select, input {
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            transition: all 0.3s ease;
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.05),
+                0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+            color: #495057;
+            width: 100%;
+        }
+        
+        #class-select {
+            text-align: center;
+            width: 100%;
+        }
+        
+        #student-select {
+            width: 100%;
+        }
+        
+        select:focus, input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.05),
+                0 0 0 3px rgba(52, 152, 219, 0.2),
+                0 2px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(to bottom, #ffffff, #fefefe);
+        }
+        
+        #class-select.turma-selecionada {
+            background: #ffeb3b !important;
+            color: #333 !important;
+            font-weight: bold !important;
+        }
+        
+        #class-select option:nth-child(even) {
+            background-color: #f0f8ff;
+        }
+        
+        #class-select option:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        
+        #class-select option:hover {
+            background-color: #e1f0ff !important;
+        }
+        
+        #class-select option:checked {
+            background-color: #ffeb3b !important;
+            color: #000000 !important;
+            font-weight: bold !important;
+        }
+        
+        #student-select.aluno-selecionado {
+            background: #1a237e !important;
+            color: #ffffff !important;
+            font-weight: bold !important;
+        }
+        
+        #student-select option {
+            font-weight: bold !important;
+            color: #000000 !important;
+        }
+        
+        #student-select option:nth-child(even) {
+            background-color: #f0f8ff;
+        }
+        
+        #student-select option:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        
+        #student-select option:hover {
+            background-color: #e1f0ff !important;
+        }
+        
+        #student-select option:checked {
+            background-color: #d0e7ff !important;
+            font-weight: bold;
+            color: #000000 !important;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 6px rgba(0,0,0,0.1),
+                0 2px 4px rgba(0,0,0,0.06);
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            height: 46px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #3cb0fd, #3498db);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 12px rgba(0,0,0,0.15),
+                0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.1),
+                0 1px 2px rgba(0,0,0,0.06);
+        }
+        
+        .btn:disabled {
+            background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .btn:disabled:active {
+            transform: none;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        /* CONTAINER PRINCIPAL DOS CARDS */
+        .results-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            width: 100%;
+            min-height: 700px;
+        }
+        
+        /* CARD DE BIMESTRE */
+        .bimester-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            min-width: 0;
+            height: 700px;
+        }
+        
+        .bimester-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .bimester-card.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            max-height: 90vh;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .bimester-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            user-select: none;
+            flex-shrink: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bimester-header:hover {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+        
+        .bimester-content {
+            padding: 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        /* GRID DE DISCIPLINAS - ALTURAS FIXAS E SEM QUEBRA */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+        
+        .subject-row {
+            display: grid;
+            grid-template-columns: 2fr 0.8fr 0.8fr;
+            gap: 6px;
+            min-height: 70px;
+            align-items: stretch;
+        }
+        
+        .grid-header {
+            background-color: var(--dark-color) !important;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            padding: 12px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 50px;
+        }
+        
+        .subject-cell, .grade-cell, .faltas-cell {
+            padding: 10px 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            white-space: normal;
+            word-break: break-word;
+            overflow: visible;
+            height: 70px;
+            border-radius: 6px;
+            min-height: 70px;
+            max-height: 70px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .subject-cell {
+            justify-content: center;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 5px 3px;
+            font-size: 0.75rem;
+            line-height: 1.15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            white-space: normal;
+            overflow: visible;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .grade-cell {
+            font-weight: 700;
+            text-align: center;
+            min-width: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .grade-cell.nota-baixa {
+            background-color: var(--nota-baixa);
+        }
+        
+        .grade-cell.nota-alta {
+            background-color: var(--nota-alta);
+        }
+        
+        .grade-cell.sem-nota {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .faltas-cell {
+            color: #000000;
+            font-weight: bold;
+            text-align: center;
+            min-width: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            font-size: 1.2rem;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .faltas-total-cell {
+            background-color: #ff9800 !important;
+            color: #ffffff !important;
+            font-weight: bold !important;
+            font-size: 1.3rem !important;
+        }
+        
+        .total-row {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px 0 10px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--dark-color);
+            font-size: clamp(1rem, 2vw, 1.1rem);
+        }
+        
+        .error {
+            background: linear-gradient(135deg, #ffeaea, #ffdada);
+            color: var(--accent-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: center;
+            border-left: 4px solid var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            width: 100%;
+        }
+
+        /* 5º CONCEITO - COR ESPECIAL */
+        .bimester-card.conceito5 .bimester-header {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .bimester-card.conceito5 .bimester-header:hover {
+            background: linear-gradient(135deg, #229954, #27ae60);
+        }
+
+        /* AJUSTES RESPONSIVOS */
+        @media (max-width: 1600px) {
+            .bimester-card {
+                height: 650px;
+            }
+            
+            .subject-row {
+                min-height: 65px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.85rem;
+                height: 65px;
+                min-height: 65px;
+                max-height: 65px;
+                padding: 8px 6px;
+            }
+            
+            .grid-header {
+                font-size: 0.85rem;
+                padding: 10px 6px;
+                min-height: 45px;
+            }
+            
+            .subject-cell {
+                font-size: 0.7rem;
+                line-height: 1.1;
+                padding: 4px 2px;
+            }
+        }
+        
+        @media (max-width: 1400px) {
+            .bimester-card {
+                height: 600px;
+            }
+            
+            .subject-row {
+                min-height: 60px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.8rem;
+                height: 60px;
+                min-height: 60px;
+                max-height: 60px;
+                padding: 8px 5px;
+            }
+            
+            .grid-header {
+                font-size: 0.8rem;
+                padding: 10px 5px;
+                min-height: 40px;
+            }
+            
+            .bimester-header {
+                font-size: 1.1rem;
+                height: 55px;
+            }
+            
+            .subject-cell {
+                font-size: 0.65rem;
+                line-height: 1.1;
+                padding: 3px 2px;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .results-container {
+                flex-wrap: wrap;
+                min-height: auto;
+            }
+            
+            .bimester-card {
+                flex: 1 1 calc(33.333% - 15px);
+                height: 550px;
+                min-width: 300px;
+            }
+            
+            .subject-row {
+                min-height: 55px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.75rem;
+                height: 55px;
+                min-height: 55px;
+                max-height: 55px;
+                padding: 7px 4px;
+            }
+            
+            .grid-header {
+                font-size: 0.75rem;
+                padding: 9px 4px;
+                min-height: 38px;
+            }
+            
+            .bimester-header {
+                font-size: 1rem;
+                height: 50px;
+            }
+            
+            .controls-panel {
+                padding: 15px;
+            }
+            
+            .controls-center {
+                order: 2;
+                width: 100%;
+                flex: 1 1 100%;
+            }
+            
+            .nav-btn.prev {
+                order: 1;
+            }
+            
+            .nav-btn.next {
+                order: 3;
+            }
+            
+            .subject-cell {
+                font-size: 0.6rem;
+                line-height: 1.05;
+                padding: 3px 1px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .bimester-card {
+                flex: 1 1 calc(50% - 15px);
+                height: 500px;
+                min-width: 280px;
+            }
+            
+            .subject-row {
+                min-height: 50px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.7rem;
+                height: 50px;
+                min-height: 50px;
+                max-height: 50px;
+                padding: 6px 3px;
+            }
+            
+            .grid-header {
+                font-size: 0.7rem;
+                padding: 8px 3px;
+                min-height: 35px;
+            }
+            
+            .controls-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-btn {
+                max-width: 100%;
+                flex: 0 0 auto;
+            }
+            
+            .form-group {
+                min-width: 100%;
+            }
+            
+            .controls-center {
+                gap: 10px;
+            }
+            
+            .bimester-header {
+                font-size: 0.95rem;
+                height: 48px;
+            }
+            
+            .subject-cell {
+                font-size: 0.55rem;
+                line-height: 1.0;
+                padding: 2px 1px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 10px;
+            }
+            
+            header {
+                padding: 15px 10px;
+                margin-bottom: 20px;
+            }
+            
+            .controls-panel {
+                padding: 15px 12px;
+                margin-bottom: 20px;
+            }
+            
+            .results-container {
+                gap: 12px;
+            }
+            
+            .bimester-card {
+                flex: 1 1 100%;
+                height: 480px;
+                min-width: 100%;
+            }
+            
+            .subject-row {
+                min-height: 48px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.8rem;
+                height: 48px;
+                min-height: 48px;
+                max-height: 48px;
+                padding: 8px 4px;
+            }
+            
+            .grid-header {
+                font-size: 0.8rem;
+                padding: 10px 4px;
+                min-height: 38px;
+            }
+            
+            .bimester-header {
+                font-size: 1rem;
+                height: 50px;
+            }
+            
+            .nav-btn {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                height: 44px;
+            }
+            
+            .subject-cell {
+                font-size: 0.65rem;
+                line-height: 1.05;
+                padding: 3px 2px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 10px 8px;
+            }
+            
+            header {
+                padding: 12px 8px;
+                border-radius: 8px 8px 0 0;
+            }
+            
+            .controls-panel {
+                padding: 12px 10px;
+                border-radius: 8px;
+                gap: 10px;
+            }
+            
+            .controls-center {
+                gap: 8px;
+            }
+            
+            label {
+                font-size: 0.9rem;
+                margin-bottom: 6px;
+            }
+            
+            select, input {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+            
+            .nav-btn {
+                font-size: 0.85rem;
+                min-width: 100px;
+                padding: 8px 10px;
+            }
+            
+            .btn {
+                font-size: 0.9rem;
+                padding: 10px 12px;
+                height: 42px;
+            }
+            
+            .bimester-card.expanded {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .bimester-card {
+                height: 460px;
+            }
+            
+            .subject-row {
+                min-height: 46px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.75rem;
+                height: 46px;
+                min-height: 46px;
+                max-height: 46px;
+                padding: 7px 3px;
+            }
+            
+            .grid-header {
+                font-size: 0.75rem;
+                padding: 9px 3px;
+                min-height: 36px;
+            }
+            
+            .bimester-header {
+                font-size: 0.9rem;
+                height: 46px;
+            }
+            
+            .subject-cell {
+                font-size: 0.55rem;
+                line-height: 0.95;
+                padding: 2px 1px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .controls-panel {
+                padding: 10px 8px;
+            }
+            
+            .nav-btn {
+                font-size: 0.8rem;
+                padding: 8px;
+                min-width: 90px;
+            }
+            
+            .btn {
+                font-size: 0.85rem;
+                padding: 8px 10px;
+            }
+            
+            .bimester-header {
+                padding: 8px 3px;
+                font-size: 0.85rem;
+                height: 44px;
+            }
+            
+            .bimester-content {
+                padding: 10px;
+            }
+            
+            .bimester-card {
+                height: 440px;
+            }
+            
+            .subject-row {
+                min-height: 44px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.7rem;
+                height: 44px;
+                min-height: 44px;
+                max-height: 44px;
+                padding: 6px 2px;
+            }
+            
+            .grid-header {
+                font-size: 0.7rem;
+                padding: 8px 2px;
+                min-height: 34px;
+            }
+            
+            .subject-cell {
+                font-size: 0.5rem;
+                line-height: 0.9;
+                padding: 2px 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SISTEMA INTEGRADO CONSELHO DE CLASSE</h1>
+        </header>
+        
+        <div class="controls-panel">
+            <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
+            
+            <div class="controls-center">
+                <div class="form-group turma">
+                    <label for="class-select">Selecione a Turma:</label>
+                    <select id="class-select">
+                        <option value="">-- Selecione uma turma --</option>
+                    </select>
+                </div>
+                
+                <div class="form-group aluno">
+                    <label for="student-select">Selecione o Aluno:</label>
+                    <select id="student-select" disabled>
+                        <option value="">-- Primeiro selecione uma turma --</option>
+                    </select>
+                </div>
+                
+                <div class="form-group btn-container">
+                    <button id="load-data" class="btn" disabled>Carregar Dados</button>
+                </div>
+            </div>
+            
+            <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
+        </div>
+        
+        <div id="results" class="results-container">
+            <div class="no-data">Selecione uma turma e um aluno para visualizar os dados</div>
+        </div>
+        
+        <div class="footer">
+            <p>Sistema de Acompanhamento Escolar &copy; 2025</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        // URL DO WEB APP
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxkvVgm7pKdRSvQTerr9UpbHUPmc9Ck7CyGNjjdEQdfIMMNdfNC5i6we7f5rn8pTqSz/exec';
+
+        // Elementos DOM
+        const classSelect = document.getElementById('class-select');
+        const studentSelect = document.getElementById('student-select');
+        const loadButton = document.getElementById('load-data');
+        const resultsContainer = document.getElementById('results');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const overlay = document.getElementById('overlay');
+
+        // Variáveis globais para navegação
+        let currentStudents = [];
+        let currentStudentIndex = -1;
+        let currentTurma = '';
+        let currentExpandedCard = null;
+
+        /* ===================== CARREGAR TURMAS ===================== */
+        async function populateClassSelect() {
+            try {
+                showLoading('Carregando turmas...');
+
+                const response = await fetch(`${WEB_APP_URL}?action=getTurmas`);
+                const turmas = await response.json();
+
+                if (turmas.error) throw new Error(turmas.error);
+
+                classSelect.innerHTML = '<option value="">-- Selecione uma turma --</option>';
+                turmas.forEach(turma => {
+                    const option = document.createElement('option');
+                    option.value = turma;
+                    option.textContent = turma;
+                    classSelect.appendChild(option);
+                });
+
+                hideLoading();
+            } catch (err) {
+                showError("Erro ao carregar turmas.");
+                console.error(err);
+            }
+        }
+
+        /* ===================== CARREGAR ALUNOS ===================== */
+        classSelect.addEventListener('change', async function () {
+            const turma = this.value;
+
+            if (turma) classSelect.classList.add('turma-selecionada');
+            else classSelect.classList.remove('turma-selecionada');
+
+            studentSelect.disabled = true;
+            loadButton.disabled = true;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+
+            if (!turma) {
+                studentSelect.innerHTML = '<option value="">-- Primeiro selecione uma turma --</option>';
+                showNoData();
+                return;
+            }
+
+            studentSelect.innerHTML = '<option>Carregando alunos...</option>';
+
+            try {
+                const response = await fetch(`${WEB_APP_URL}?action=getAlunos&turma=${encodeURIComponent(turma)}`);
+                const alunos = await response.json();
+
+                if (alunos.error) throw new Error(alunos.error);
+
+                studentSelect.innerHTML = '<option value="">-- Selecione um aluno --</option>';
+
+                // Armazena a lista de alunos para navegação
+                currentStudents = Array.isArray(alunos) ? alunos : [];
+                currentTurma = turma;
+
+                currentStudents.forEach((a) => {
+                    const option = document.createElement('option');
+                    option.value = a;
+                    option.textContent = a;
+                    studentSelect.appendChild(option);
+                });
+
+                studentSelect.disabled = false;
+            } catch (err) {
+                studentSelect.innerHTML = '<option value="">Erro ao carregar alunos</option>';
+                console.error(err);
+            }
+        });
+
+        /* Habilitar botão quando aluno for selecionado */
+        studentSelect.addEventListener('change', function () {
+            const hasStudent = !!this.value;
+            loadButton.disabled = !hasStudent;
+
+            if (hasStudent) studentSelect.classList.add('aluno-selecionado');
+            else studentSelect.classList.remove('aluno-selecionado');
+
+            if (hasStudent) {
+                currentStudentIndex = currentStudents.indexOf(this.value);
+                updateNavigationButtons();
+            } else {
+                currentStudentIndex = -1;
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            }
+        });
+
+        /* ===================== NAVEGAÇÃO ENTRE ALUNOS ===================== */
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentStudentIndex <= 0;
+            nextBtn.disabled = currentStudentIndex >= currentStudents.length - 1 || currentStudents.length === 0;
+        }
+
+        async function navigateStudents(direction) {
+            if (direction === 'prev' && currentStudentIndex > 0) {
+                currentStudentIndex--;
+            } else if (direction === 'next' && currentStudentIndex < currentStudents.length - 1) {
+                currentStudentIndex++;
+            } else {
+                return;
+            }
+
+            studentSelect.value = currentStudents[currentStudentIndex];
+            studentSelect.classList.add('aluno-selecionado');
+
+            // Carrega os dados do aluno automaticamente
+            await loadStudentData();
+            updateNavigationButtons();
+        }
+
+        prevBtn.addEventListener('click', () => navigateStudents('prev'));
+        nextBtn.addEventListener('click', () => navigateStudents('next'));
+
+        /* ===================== CARREGAR DADOS DO ALUNO ===================== */
+        loadButton.addEventListener('click', loadStudentData);
+
+        async function loadStudentData() {
+            const turma = classSelect.value;
+            const aluno = studentSelect.value;
+
+            currentStudentIndex = currentStudents.indexOf(aluno);
+            updateNavigationButtons();
+
+            showLoading("Carregando dados...");
+
+            try {
+                const response = await fetch(`${WEB_APP_URL}?action=getDadosAluno&turma=${encodeURIComponent(turma)}&aluno=${encodeURIComponent(aluno)}`);
+                const dados = await response.json();
+
+                if (dados.error) throw new Error(dados.error);
+
+                // Verifica estrutura mínima esperada
+                const hasNotas = Array.isArray(dados.notas) && dados.notas.length >= 1;
+                const hasDisciplinas = Array.isArray(dados.disciplinas);
+                if (!hasNotas || !hasDisciplinas) {
+                    console.error("Resposta do backend:", dados);
+                    showError("Estrutura de dados inválida.");
+                    return;
+                }
+
+                // normalize shape: garantir indices 0..3 (bimestres)
+                const notas = Array.isArray(dados.notas) ? dados.notas : [];
+                const faltas = Array.isArray(dados.faltas) ? dados.faltas : [[],[],[],[]];
+                const disciplinas = Array.isArray(dados.disciplinas) ? dados.disciplinas : [];
+                const conceito5 = Array.isArray(dados.conceito5) ? dados.conceito5 : [];
+                const coresConceito5 = Array.isArray(dados.coresConceito5) ? dados.coresConceito5 : [];
+                const totalFaltasPorDisciplina = Array.isArray(dados.totalFaltasPorDisciplina) ? dados.totalFaltasPorDisciplina : [];
+                const faltasTotal = typeof dados.faltasTotal === 'number' ? dados.faltasTotal : (totalFaltasPorDisciplina.reduce((a,b)=>a+(b||0),0) || 0);
+
+                displayStudentData({ disciplinas, notas, faltas, conceito5, coresConceito5, totalFaltasPorDisciplina, faltasTotal, bimestres: dados.bimestres || {} });
+            } catch (err) {
+                showError("Erro ao carregar dados do aluno.");
+                console.error(err);
+            }
+        }
+
+        /* ===================== EXIBIR DADOS DO ALUNO ===================== */
+        function displayStudentData(dados) {
+            resultsContainer.innerHTML = "";
+
+            // Valida
+            if (!dados || !Array.isArray(dados.disciplinas) || !Array.isArray(dados.notas)) {
+                showError("Estrutura de dados inválida.");
+                return;
+            }
+
+            const disciplinas = dados.disciplinas;
+            const disciplinasCount = disciplinas.length || 0;
+
+            // Ensure notas and faltas are arrays of 4 arrays
+            const notas = [];
+            const faltas = [];
+            for (let b = 0; b < 4; b++) {
+                notas[b] = Array.isArray(dados.notas[b]) ? dados.notas[b] : new Array(disciplinasCount).fill(null);
+                faltas[b] = Array.isArray(dados.faltas[b]) ? dados.faltas[b] : new Array(disciplinasCount).fill(0);
+                // if shorter, pad
+                if (notas[b].length < disciplinasCount) notas[b] = notas[b].concat(new Array(disciplinasCount - notas[b].length).fill(null));
+                if (faltas[b].length < disciplinasCount) faltas[b] = faltas[b].concat(new Array(disciplinasCount - faltas[b].length).fill(0));
+            }
+
+            // Cria cards para cada bimestre (1..4) e 5º conceito
+            for (let b = 0; b < 5; b++) {
+                const card = document.createElement('div');
+                card.className = "bimester-card";
+                if (b === 4) {
+                    card.classList.add("conceito5");
+                }
+
+                const header = document.createElement('div');
+                header.className = "bimester-header";
+                
+                if (b < 4) {
+                    header.textContent = `${b+1}º Bimestre`;
+                } else {
+                    header.textContent = "5º CONCEITO";
+                }
+
+                // Adiciona funcionalidade de duplo clique para expandir
+                header.addEventListener('dblclick', function() {
+                    toggleCardExpansion(card);
+                });
+
+                const content = document.createElement('div');
+                content.className = "bimester-content";
+
+                // Cria grid para as disciplinas, notas e faltas
+                const grid = document.createElement('div');
+                grid.className = "subject-grid";
+
+                // Cabeçalhos da grid
+                const headerRow = document.createElement('div');
+                headerRow.className = "subject-row";
+                
+                const header1 = document.createElement("div");
+                header1.className = "grid-header";
+                header1.textContent = "Disciplina";
+                
+                const header2 = document.createElement("div");
+                header2.className = "grid-header";
+                header2.textContent = "Nota";
+                
+                const header3 = document.createElement("div");
+                header3.className = "grid-header";
+                header3.textContent = "Faltas";
+                
+                headerRow.appendChild(header1);
+                headerRow.appendChild(header2);
+                headerRow.appendChild(header3);
+                grid.appendChild(headerRow);
+
+                // Itera pelas disciplinas
+                for (let i = 0; i < disciplinasCount; i++) {
+                    const nomeDisc = disciplinas[i] || (`Disciplina ${i+1}`);
+                    
+                    // Formata o nome da disciplina para quebras adequadas
+                    let displayNome = formatDisciplinaNome(nomeDisc);
+                    
+                    const row = document.createElement('div');
+                    row.className = "subject-row";
+                    
+                    // Célula do nome da disciplina - COM QUEBRA DE LINHA
+                    const nomeCell = document.createElement("div");
+                    nomeCell.className = "subject-cell";
+                    
+                    // Se o nome formatado contém <br>, usamos innerHTML
+                    if (displayNome.includes('<br>')) {
+                        nomeCell.innerHTML = displayNome;
+                    } else {
+                        nomeCell.textContent = displayNome;
+                    }
+
+                    // Célula da nota
+                    const gradeCell = document.createElement("div");
+                    gradeCell.className = "grade-cell";
+
+                    // Célula das faltas
+                    const faltasCell = document.createElement("div");
+                    faltasCell.className = "faltas-cell";
+
+                    if (b < 4) {
+                        // Bimestres 1-4 - NOTAS INTEIRAS
+                        const notaRaw = notas[b][i];
+                        const faltaRaw = faltas[b][i];
+
+                        let nota = null;
+                        if (notaRaw !== null && notaRaw !== undefined && notaRaw !== "") {
+                            const parsed = parseFloat(notaRaw);
+                            nota = isNaN(parsed) ? null : parsed;
+                        }
+
+                        const falta = (faltaRaw === null || faltaRaw === undefined || faltaRaw === "") ? 0 : (parseInt(faltaRaw) || 0);
+
+                        // Aplica a cor baseada na nota (NOTAS INTEIRAS)
+                        if (nota !== null) {
+                            if (nota >= 5) {
+                                gradeCell.classList.add("nota-alta");
+                            } else {
+                                gradeCell.classList.add("nota-baixa");
+                            }
+                            // Exibe como número inteiro SEM VÍRGULAS
+                            gradeCell.textContent = Math.round(nota);
+                        } else {
+                            gradeCell.classList.add("sem-nota");
+                            gradeCell.textContent = "--";
+                        }
+
+                        // Preenche a célula de faltas
+                        faltasCell.textContent = falta;
+                    } else {
+                        // 5º Conceito (médias e totais) - INTEIROS SEM VÍRGULAS
+                        // CORREÇÃO: Cálculo da média com soma das 4 notas dividida por 4
+                        // com arredondamento a partir de 0,5 (usando Math.round)
+                        let mediaCalculada = null;
+                        
+                        // Soma as notas dos 4 bimestres
+                        let soma = 0;
+                        let temNota = false;
+                        
+                        for (let bimestre = 0; bimestre < 4; bimestre++) {
+                            const notaRaw = notas[bimestre][i];
+                            if (notaRaw !== null && notaRaw !== undefined && notaRaw !== "") {
+                                const parsed = parseFloat(notaRaw);
+                                if (!isNaN(parsed)) {
+                                    soma += parsed;
+                                    temNota = true;
+                                }
+                            }
+                        }
+                        
+                        // Calcula a média dividindo por 4
+                        if (temNota) {
+                            mediaCalculada = soma / 4;
+                            // Arredonda usando Math.round (arredonda 0.5 para cima)
+                            const mediaArredondada = Math.round(mediaCalculada);
+                            
+                            // Aplica a cor baseada na média (INTEIRO SEM VÍRGULAS)
+                            if (mediaArredondada >= 5) {
+                                gradeCell.classList.add("nota-alta");
+                            } else {
+                                gradeCell.classList.add("nota-baixa");
+                            }
+                            // Exibe como número inteiro SEM VÍRGULAS
+                            gradeCell.textContent = mediaArredondada;
+                        } else {
+                            gradeCell.classList.add("sem-nota");
+                            gradeCell.textContent = "--";
+                        }
+
+                        // Soma as faltas dos 4 bimestres
+                        let totalFaltas = 0;
+                        for (let bimestre = 0; bimestre < 4; bimestre++) {
+                            const faltaRaw = faltas[bimestre][i];
+                            if (faltaRaw !== null && faltaRaw !== undefined && faltaRaw !== "") {
+                                const parsed = parseInt(faltaRaw);
+                                if (!isNaN(parsed)) {
+                                    totalFaltas += parsed;
+                                }
+                            }
+                        }
+
+                        // Preenche a célula de faltas totais
+                        faltasCell.textContent = totalFaltas;
+                    }
+
+                    row.appendChild(nomeCell);
+                    row.appendChild(gradeCell);
+                    row.appendChild(faltasCell);
+                    grid.appendChild(row);
+                }
+
+                // ADICIONA LINHA DE TOTAL PARA CADA BIMESTRE
+                if (b < 4) {
+                    // Calcula o total de faltas para este bimestre específico
+                    let totalFaltasBimestre = 0;
+                    for (let i = 0; i < disciplinasCount; i++) {
+                        const faltaRaw = faltas[b][i];
+                        if (faltaRaw !== null && faltaRaw !== undefined && faltaRaw !== "") {
+                            const parsed = parseInt(faltaRaw);
+                            if (!isNaN(parsed)) {
+                                totalFaltasBimestre += parsed;
+                            }
+                        }
+                    }
+
+                    // Adiciona linha de total
+                    const totalRow = document.createElement('div');
+                    totalRow.className = "subject-row total-row";
+                    
+                    const totalNomeCell = document.createElement("div");
+                    totalNomeCell.className = "subject-cell";
+                    totalNomeCell.textContent = "TOTAL";
+                    totalNomeCell.style.fontWeight = "bold";
+                    
+                    const totalGradeCell = document.createElement("div");
+                    totalGradeCell.className = "grade-cell sem-nota";
+                    totalGradeCell.textContent = "--";
+                    
+                    const totalFaltasCell = document.createElement("div");
+                    totalFaltasCell.className = "faltas-cell faltas-total-cell";
+                    totalFaltasCell.textContent = totalFaltasBimestre;
+                    
+                    totalRow.appendChild(totalNomeCell);
+                    totalRow.appendChild(totalGradeCell);
+                    totalRow.appendChild(totalFaltasCell);
+                    grid.appendChild(totalRow);
+                } else {
+                    // Para o 5º conceito, mostra o total de faltas do ano inteiro
+                    let totalFaltasAno = 0;
+                    for (let bimestre = 0; bimestre < 4; bimestre++) {
+                        for (let i = 0; i < disciplinasCount; i++) {
+                            const faltaRaw = faltas[bimestre][i];
+                            if (faltaRaw !== null && faltaRaw !== undefined && faltaRaw !== "") {
+                                const parsed = parseInt(faltaRaw);
+                                if (!isNaN(parsed)) {
+                                    totalFaltasAno += parsed;
+                                }
+                            }
+                        }
+                    }
+
+                    // Adiciona linha de total para o 5º conceito
+                    const totalRow = document.createElement('div');
+                    totalRow.className = "subject-row total-row";
+                    
+                    const totalNomeCell = document.createElement("div");
+                    totalNomeCell.className = "subject-cell";
+                    totalNomeCell.textContent = "TOTAL ANUAL";
+                    totalNomeCell.style.fontWeight = "bold";
+                    
+                    const totalGradeCell = document.createElement("div");
+                    totalGradeCell.className = "grade-cell sem-nota";
+                    totalGradeCell.textContent = "--";
+                    
+                    const totalFaltasCell = document.createElement("div");
+                    totalFaltasCell.className = "faltas-cell faltas-total-cell";
+                    totalFaltasCell.textContent = totalFaltasAno;
+                    
+                    totalRow.appendChild(totalNomeCell);
+                    totalRow.appendChild(totalGradeCell);
+                    totalRow.appendChild(totalFaltasCell);
+                    grid.appendChild(totalRow);
+                }
+
+                content.appendChild(grid);
+                card.appendChild(header);
+                card.appendChild(content);
+                resultsContainer.appendChild(card);
+            }
+        }
+
+        /* ===================== FUNÇÃO PARA FORMATAR NOME DA DISCIPLINA ===================== */
+        function formatDisciplinaNome(nome) {
+            // Converte para maiúsculas e remove espaços extras
+            let nomeFormatado = nome.toUpperCase().trim();
+            
+            // Se já tiver duas palavras, coloca uma embaixo da outra
+            const palavras = nomeFormatado.split(/\s+/);
+            
+            if (palavras.length === 2) {
+                // Duas palavras: uma embaixo da outra
+                return palavras[0] + '<br>' + palavras[1];
+            } else if (palavras.length > 2) {
+                // Mais de duas palavras: tenta agrupar de forma equilibrada
+                const meio = Math.ceil(palavras.length / 2);
+                const primeiraLinha = palavras.slice(0, meio).join(' ');
+                const segundaLinha = palavras.slice(meio).join(' ');
+                return primeiraLinha + '<br>' + segundaLinha;
+            }
+            
+            // Uma palavra apenas
+            return nomeFormatado;
+        }
+
+        /* ===================== FUNÇÃO PARA EXPANDIR/RETRAIR CARD ===================== */
+        function toggleCardExpansion(card) {
+            // Se o card já está expandido, retrai
+            if (card.classList.contains('expanded')) {
+                card.classList.remove('expanded');
+                overlay.style.display = 'none';
+                currentExpandedCard = null;
+            } else {
+                // Remove a classe expanded de todos os cards
+                document.querySelectorAll('.bimester-card').forEach(c => {
+                    c.classList.remove('expanded');
+                });
+                
+                // Adiciona a classe expanded no card clicado
+                card.classList.add('expanded');
+                overlay.style.display = 'block';
+                currentExpandedCard = card;
+            }
+        }
+
+        // Fechar card expandido ao clicar no overlay
+        overlay.addEventListener('click', function() {
+            if (currentExpandedCard) {
+                currentExpandedCard.classList.remove('expanded');
+                overlay.style.display = 'none';
+                currentExpandedCard = null;
+            }
+        });
+
+        /* ===================== FUNÇÕES DE AUXÍLIO ===================== */
+        function showLoading(msg) {
+            resultsContainer.innerHTML = `<div class="loading">${msg}</div>`;
+        }
+
+        function hideLoading() {
+            const loading = resultsContainer.querySelector('.loading');
+            if (loading) loading.remove();
+        }
+
+        function showError(msg) {
+            resultsContainer.innerHTML = `<div class="error">${msg}</div>`;
+        }
+
+        function showNoData() {
+            resultsContainer.innerHTML = '<div class="no-data">Selecione uma turma e um aluno para visualizar os dados</div>';
+        }
+
+        /* ===================== INICIAR ===================== */
+        document.addEventListener("DOMContentLoaded", populateClassSelect);
+    </script>
+</body>
+</html>
