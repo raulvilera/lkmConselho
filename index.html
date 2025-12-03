@@ -382,9 +382,10 @@
                 0 2px 4px rgba(0,0,0,0.05);
         }
         
-        /* CONTAINER PRINCIPAL DOS CARDS */
+        /* CONTAINER PRINCIPAL DOS CARDS - MODIFICAÇÃO PARA RESPONSIVIDADE */
         .results-container {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 colunas no desktop */
             gap: 15px;
             margin-top: 20px;
             width: 100%;
@@ -403,9 +404,8 @@
             border: 1px solid rgba(0,0,0,0.05);
             position: relative;
             z-index: 1;
-            flex: 1;
-            min-width: 0;
             height: 700px;
+            width: 100%;
         }
         
         .bimester-card:hover {
@@ -631,6 +631,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             width: 100%;
+            grid-column: 1 / -1;
         }
 
         /* 5º CONCEITO - COR ESPECIAL */
@@ -642,8 +643,42 @@
             background: linear-gradient(135deg, #229954, #27ae60);
         }
 
-        /* AJUSTES RESPONSIVOS PARA O HEADER COM LOGO */
-        @media (max-width: 1200px) {
+        /* ============ RESPONSIVIDADE ============ */
+
+        /* TABLET - 2 COLUNAS */
+        @media (max-width: 1024px) {
+            .results-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 colunas no tablet */
+            }
+            
+            .bimester-card {
+                height: 650px;
+            }
+            
+            .subject-row {
+                min-height: 65px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.85rem;
+                height: 65px;
+                min-height: 65px;
+                max-height: 65px;
+                padding: 8px 6px;
+            }
+            
+            .grid-header {
+                font-size: 0.85rem;
+                padding: 10px 6px;
+                min-height: 45px;
+            }
+            
+            .subject-cell {
+                font-size: 0.7rem;
+                line-height: 1.1;
+                padding: 4px 2px;
+            }
+            
             .logo-img {
                 height: 60px;
                 max-width: 160px;
@@ -653,8 +688,74 @@
                 font-size: clamp(1.4rem, 3.5vw, 2rem);
             }
         }
-        
-        @media (max-width: 992px) {
+
+        /* MOBILE - 1 COLUNA */
+        @media (max-width: 768px) {
+            .results-container {
+                grid-template-columns: 1fr; /* 1 coluna no mobile */
+            }
+            
+            .container {
+                padding: 15px 10px;
+            }
+            
+            header {
+                padding: 12px 10px;
+                margin-bottom: 20px;
+            }
+            
+            .controls-panel {
+                padding: 12px 10px;
+                margin-bottom: 20px;
+            }
+            
+            .results-container {
+                gap: 12px;
+            }
+            
+            .bimester-card {
+                height: 500px;
+            }
+            
+            .subject-row {
+                min-height: 55px;
+            }
+            
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.8rem;
+                height: 55px;
+                min-height: 55px;
+                max-height: 55px;
+                padding: 8px 4px;
+            }
+            
+            .grid-header {
+                font-size: 0.8rem;
+                padding: 10px 4px;
+                min-height: 38px;
+            }
+            
+            .bimester-header {
+                font-size: 1rem;
+                height: 50px;
+            }
+            
+            .nav-btn {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                height: 44px;
+            }
+            
+            .subject-cell {
+                font-size: 0.65rem;
+                line-height: 1.05;
+                padding: 3px 2px;
+            }
+            
             .header-content {
                 flex-direction: column;
                 text-align: center;
@@ -685,23 +786,42 @@
                 padding: 15px;
             }
         }
-        
-        @media (max-width: 768px) {
-            .logo-img {
-                height: 50px;
-                max-width: 130px;
+
+        /* MOBILE PEQUENO */
+        @media (max-width: 480px) {
+            .bimester-card {
+                height: 460px;
             }
             
-            h1 {
-                font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+            .subject-row {
+                min-height: 48px;
             }
             
-            header {
-                padding: 12px 10px;
+            .subject-cell, .grade-cell, .faltas-cell {
+                font-size: 0.75rem;
+                height: 48px;
+                min-height: 48px;
+                max-height: 48px;
+                padding: 7px 3px;
             }
-        }
-        
-        @media (max-width: 576px) {
+            
+            .grid-header {
+                font-size: 0.75rem;
+                padding: 9px 3px;
+                min-height: 36px;
+            }
+            
+            .bimester-header {
+                font-size: 0.9rem;
+                height: 46px;
+            }
+            
+            .subject-cell {
+                font-size: 0.55rem;
+                line-height: 0.95;
+                padding: 2px 1px;
+            }
+            
             .logo-img {
                 height: 45px;
                 max-width: 120px;
@@ -715,123 +835,9 @@
                 gap: 10px;
             }
         }
-        
-        @media (max-width: 400px) {
-            .logo-img {
-                height: 40px;
-                max-width: 100px;
-            }
-            
-            h1 {
-                font-size: 1rem;
-            }
-        }
-        
-        /* AJUSTES RESPONSIVOS PARA OS CARDS */
-        @media (max-width: 1600px) {
-            .bimester-card {
-                height: 650px;
-            }
-            
-            .subject-row {
-                min-height: 65px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.85rem;
-                height: 65px;
-                min-height: 65px;
-                max-height: 65px;
-                padding: 8px 6px;
-            }
-            
-            .grid-header {
-                font-size: 0.85rem;
-                padding: 10px 6px;
-                min-height: 45px;
-            }
-            
-            .subject-cell {
-                font-size: 0.7rem;
-                line-height: 1.1;
-                padding: 4px 2px;
-            }
-        }
-        
-        @media (max-width: 1400px) {
-            .bimester-card {
-                height: 600px;
-            }
-            
-            .subject-row {
-                min-height: 60px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.8rem;
-                height: 60px;
-                min-height: 60px;
-                max-height: 60px;
-                padding: 8px 5px;
-            }
-            
-            .grid-header {
-                font-size: 0.8rem;
-                padding: 10px 5px;
-                min-height: 40px;
-            }
-            
-            .bimester-header {
-                font-size: 1.1rem;
-                height: 55px;
-            }
-            
-            .subject-cell {
-                font-size: 0.65rem;
-                line-height: 1.1;
-                padding: 3px 2px;
-            }
-        }
-        
+
+        /* AJUSTES RESPONSIVOS PARA OS CONTROLES */
         @media (max-width: 1200px) {
-            .results-container {
-                flex-wrap: wrap;
-                min-height: auto;
-            }
-            
-            .bimester-card {
-                flex: 1 1 calc(33.333% - 15px);
-                height: 550px;
-                min-width: 300px;
-            }
-            
-            .subject-row {
-                min-height: 55px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.75rem;
-                height: 55px;
-                min-height: 55px;
-                max-height: 55px;
-                padding: 7px 4px;
-            }
-            
-            .grid-header {
-                font-size: 0.75rem;
-                padding: 9px 4px;
-                min-height: 38px;
-            }
-            
-            .bimester-header {
-                font-size: 1rem;
-                height: 50px;
-            }
-            
-            .controls-panel {
-                padding: 15px;
-            }
-            
             .controls-center {
                 order: 2;
                 width: 100%;
@@ -845,39 +851,9 @@
             .nav-btn.next {
                 order: 3;
             }
-            
-            .subject-cell {
-                font-size: 0.6rem;
-                line-height: 1.05;
-                padding: 3px 1px;
-            }
         }
         
         @media (max-width: 992px) {
-            .bimester-card {
-                flex: 1 1 calc(50% - 15px);
-                height: 500px;
-                min-width: 280px;
-            }
-            
-            .subject-row {
-                min-height: 50px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.7rem;
-                height: 50px;
-                min-height: 50px;
-                max-height: 50px;
-                padding: 6px 3px;
-            }
-            
-            .grid-header {
-                font-size: 0.7rem;
-                padding: 8px 3px;
-                min-height: 35px;
-            }
-            
             .controls-panel {
                 flex-direction: column;
                 align-items: stretch;
@@ -894,82 +870,6 @@
             
             .controls-center {
                 gap: 10px;
-            }
-            
-            .bimester-header {
-                font-size: 0.95rem;
-                height: 48px;
-            }
-            
-            .subject-cell {
-                font-size: 0.55rem;
-                line-height: 1.0;
-                padding: 2px 1px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px 10px;
-            }
-            
-            header {
-                padding: 12px 10px;
-                margin-bottom: 20px;
-            }
-            
-            .controls-panel {
-                padding: 12px 10px;
-                margin-bottom: 20px;
-            }
-            
-            .results-container {
-                gap: 12px;
-            }
-            
-            .bimester-card {
-                flex: 1 1 100%;
-                height: 480px;
-                min-width: 100%;
-            }
-            
-            .subject-row {
-                min-height: 48px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.8rem;
-                height: 48px;
-                min-height: 48px;
-                max-height: 48px;
-                padding: 8px 4px;
-            }
-            
-            .grid-header {
-                font-size: 0.8rem;
-                padding: 10px 4px;
-                min-height: 38px;
-            }
-            
-            .bimester-header {
-                font-size: 1rem;
-                height: 50px;
-            }
-            
-            .nav-btn {
-                padding: 10px 12px;
-                font-size: 0.9rem;
-            }
-            
-            .btn {
-                padding: 10px 15px;
-                height: 44px;
-            }
-            
-            .subject-cell {
-                font-size: 0.65rem;
-                line-height: 1.05;
-                padding: 3px 2px;
             }
         }
         
@@ -1019,39 +919,6 @@
                 width: 95%;
                 max-height: 85vh;
             }
-            
-            .bimester-card {
-                height: 460px;
-            }
-            
-            .subject-row {
-                min-height: 46px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.75rem;
-                height: 46px;
-                min-height: 46px;
-                max-height: 46px;
-                padding: 7px 3px;
-            }
-            
-            .grid-header {
-                font-size: 0.75rem;
-                padding: 9px 3px;
-                min-height: 36px;
-            }
-            
-            .bimester-header {
-                font-size: 0.9rem;
-                height: 46px;
-            }
-            
-            .subject-cell {
-                font-size: 0.55rem;
-                line-height: 0.95;
-                padding: 2px 1px;
-            }
         }
         
         @media (max-width: 400px) {
@@ -1084,32 +951,9 @@
                 padding: 10px;
             }
             
-            .bimester-card {
-                height: 440px;
-            }
-            
-            .subject-row {
-                min-height: 44px;
-            }
-            
-            .subject-cell, .grade-cell, .faltas-cell {
-                font-size: 0.7rem;
-                height: 44px;
-                min-height: 44px;
-                max-height: 44px;
-                padding: 6px 2px;
-            }
-            
-            .grid-header {
-                font-size: 0.7rem;
-                padding: 8px 2px;
-                min-height: 34px;
-            }
-            
-            .subject-cell {
-                font-size: 0.5rem;
-                line-height: 0.9;
-                padding: 2px 1px;
+            .logo-img {
+                height: 40px;
+                max-width: 100px;
             }
         }
     </style>
@@ -1166,7 +1010,7 @@
 
     <script>
         // URL DO WEB APP
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxkvVgm7pKdRSvQTerr9UpbHUPmc9Ck7CyGNjjdEQdfIMMNdfNC5i6we7f5rn8pTqSz/exec';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzlLPrLUq-fpKkOgoE3W0htMnX9G6GMW7uZC4OTgEGa0Mg7eQY5cJYa3JNC-P3P7FAt/exec';
 
         // Elementos DOM
         const classSelect = document.getElementById('class-select');
