@@ -579,7 +579,7 @@
         }
         
         .bimester-card.conceito5 .grade-cell.nota-baixa {
-            background-color: #ff5252 !important; /* Vermelho para notas abaixo de 5 */
+            background-color: #ff5252 !important; /* Vermelho para notas 4 ou abaixo */
         }
         
         /* MODAL EXPANDIDO */
@@ -1392,7 +1392,8 @@
                         const media = medias[i];
                         const faltasDisc = totalFaltasPorDisciplina[i] || 0;
 
-                        // Aplica a cor baseada na média - REGRA ESPECIAL PARA 5º CONCEITO
+                        // CORREÇÃO: Lógica específica para 5º Conceito
+                        // 5 ou mais: azul, 4 ou abaixo: vermelho
                         if (media !== null && media !== undefined && !isNaN(media)) {
                             if (media >= 5) {
                                 gradeCell.classList.add("nota-alta");
