@@ -564,13 +564,22 @@
             font-weight: bold;
         }
         
-        /* 5º CONCEITO - COR ESPECIAL */
+        /* 5º CONCEITO - COR ESPECIAL PARA O CABEÇALHO */
         .bimester-card.conceito5 .bimester-header {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
         }
         
         .bimester-card.conceito5 .bimester-header:hover {
             background: linear-gradient(135deg, #229954, #27ae60);
+        }
+        
+        /* ESTILO ESPECÍFICO PARA NOTAS DO 5º CONCEITO */
+        .bimester-card.conceito5 .grade-cell.nota-alta {
+            background-color: #2196f3 !important; /* Azul para notas 5 ou mais */
+        }
+        
+        .bimester-card.conceito5 .grade-cell.nota-baixa {
+            background-color: #ff5252 !important; /* Vermelho para notas abaixo de 5 */
         }
         
         /* MODAL EXPANDIDO */
@@ -1383,7 +1392,7 @@
                         const media = medias[i];
                         const faltasDisc = totalFaltasPorDisciplina[i] || 0;
 
-                        // Aplica a cor baseada na média (INTEIRO SEM VÍRGULAS)
+                        // Aplica a cor baseada na média - REGRA ESPECIAL PARA 5º CONCEITO
                         if (media !== null && media !== undefined && !isNaN(media)) {
                             if (media >= 5) {
                                 gradeCell.classList.add("nota-alta");
