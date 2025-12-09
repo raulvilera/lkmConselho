@@ -77,7 +77,7 @@
             padding: 0 5px;
         }
         
-        /* CONTROLS PANEL FIXO */
+        /* CONTROLS PANEL FIXO - MELHORADO */
         .controls-panel {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 15px;
@@ -87,20 +87,32 @@
                 0 2px 4px rgba(0,0,0,0.04),
                 inset 0 1px 0 rgba(255,255,255,0.8);
             position: fixed;
-            top: 60px; /* Ajustado para ficar logo abaixo do header */
+            top: 60px;
             left: 0;
             right: 0;
             z-index: 999;
             width: 100%;
             border: 1px solid rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .controls-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
         
         .controls-row {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
             justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 20px;
+            width: 100%;
         }
         
         .nav-btn {
@@ -115,9 +127,11 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             height: 42px;
-            min-width: 90px;
-            max-width: 120px;
+            min-width: 120px;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .nav-btn.prev {
@@ -126,6 +140,7 @@
             box-shadow: 
                 0 3px 0 #a93226,
                 0 4px 8px rgba(0,0,0,0.15);
+            order: 1;
         }
         
         .nav-btn.prev:hover {
@@ -142,6 +157,7 @@
             box-shadow: 
                 0 3px 0 #1a5276,
                 0 4px 8px rgba(0,0,0,0.15);
+            order: 5;
         }
         
         .nav-btn.next:hover {
@@ -165,10 +181,12 @@
             display: flex;
             flex: 1;
             justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 20px;
             min-width: 0;
+            order: 2;
+            max-width: 1000px;
         }
         
         .form-group {
@@ -176,19 +194,20 @@
             flex-direction: column;
             flex-shrink: 0;
             text-align: center;
-        }
-        
-        /* TURMA - LARGURA AJUSTÁVEL AO CONTEÚDO */
-        .form-group.turma {
-            min-width: 150px;
-            max-width: 250px;
-            width: auto;
-        }
-        
-        /* ALUNO - LARGURA AJUSTÁVEL AO NOME */
-        .form-group.aluno {
-            min-width: 200px;
             flex: 1;
+            min-width: 0;
+        }
+        
+        /* TURMA - LARGURA AJUSTÁVEL */
+        .form-group.turma {
+            min-width: 180px;
+            max-width: 250px;
+        }
+        
+        /* ALUNO - LARGURA FLEXÍVEL */
+        .form-group.aluno {
+            min-width: 250px;
+            flex: 2;
         }
         
         /* BOTÃO CARREGAR DADOS */
@@ -245,6 +264,16 @@
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
         }
         
+        /* CENTRALIZAR TURMA NO CAMPO - IMPORTANTE */
+        #class-select.turma-selecionada {
+            text-align: center !important;
+        }
+        
+        /* Garantir que as opções da turma também fiquem centralizadas quando abertas */
+        #class-select.turma-selecionada option {
+            text-align: center !important;
+        }
+        
         /* ALUNO SELECIONADO */
         select.aluno-selecionado {
             background-color: var(--aluno-selected-bg) !important;
@@ -257,57 +286,23 @@
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
         }
         
-        /* ESTILOS PARA OPTIONS - TODOS OS TEXTOS EM NEGRITO */
+        /* ESTILOS PARA OPTIONS */
         select option {
             text-align: left !important;
             padding: 10px 15px !important;
-            font-weight: 700 !important; /* Negrito para todas as opções */
+            font-weight: 700 !important;
             background-color: white !important;
-            color: #000000 !important; /* Texto preto para todas */
+            color: #000000 !important;
             border-bottom: 1px solid #eee;
             font-size: 0.9rem;
         }
         
-        /* TURMA SELECIONADA NO DROPDOWN - FUNDO AZUL, TEXTO BRANCO */
+        /* OPÇÃO SELECIONADA NO DROPDOWN */
         select option:checked,
         select option[selected] {
             background-color: var(--dropdown-selected-bg) !important;
             color: var(--dropdown-text-selected) !important;
             font-weight: 800 !important;
-        }
-        
-        /* TURMAS NÃO SELECIONADAS NO DROPDOWN - TEXTO PRETO */
-        select#class-select option:not(:checked):not([selected]) {
-            color: #000000 !important;
-            font-weight: 700 !important;
-        }
-        
-        /* ALUNO SELECIONADO NO DROPDOWN - FUNDO AZUL, TEXTO BRANCO */
-        select#student-select option:checked,
-        select#student-select option[selected] {
-            background-color: var(--dropdown-selected-bg) !important;
-            color: var(--dropdown-text-selected) !important;
-            font-weight: 800 !important;
-        }
-        
-        /* ALUNOS NÃO SELECIONADOS NO DROPDOWN - TEXTO PRETO */
-        select#student-select option:not(:checked):not([selected]) {
-            color: #000000 !important;
-            font-weight: 700 !important;
-        }
-        
-        /* HOVER NAS OPTIONS */
-        select option:hover,
-        select option:focus {
-            background-color: #e3f2fd !important;
-            color: #1565c0 !important;
-            font-weight: 800 !important;
-        }
-        
-        select option[value=""] {
-            color: #6c757d !important;
-            font-style: italic;
-            font-weight: 600 !important;
         }
         
         select:focus {
@@ -602,6 +597,10 @@
                 font-size: 0.65rem;
                 padding: 3px 1px;
             }
+            
+            .controls-wrapper {
+                max-width: 1200px;
+            }
         }
         
         @media (max-width: 1400px) {
@@ -615,8 +614,12 @@
             }
             
             .form-group.turma {
-                min-width: 130px;
-                max-width: 200px;
+                min-width: 150px;
+                max-width: 220px;
+            }
+            
+            .controls-center {
+                gap: 15px;
             }
         }
         
@@ -627,8 +630,8 @@
             }
             
             .controls-row {
-                flex-direction: column;
-                align-items: stretch;
+                flex-wrap: wrap;
+                gap: 15px;
             }
             
             .nav-btn {
@@ -636,7 +639,14 @@
             }
             
             .controls-center {
+                order: 3;
                 width: 100%;
+                margin-top: 10px;
+            }
+            
+            .nav-btn.prev, .nav-btn.next {
+                order: unset;
+                flex: 1;
             }
             
             .bimester-header {
@@ -650,8 +660,8 @@
             }
             
             .form-group.turma {
-                min-width: 120px;
-                max-width: 180px;
+                min-width: 140px;
+                max-width: 200px;
             }
             
             .container {
@@ -676,12 +686,16 @@
             }
             
             .form-group.turma {
-                min-width: 110px;
-                max-width: 160px;
+                min-width: 130px;
+                max-width: 180px;
             }
             
             .container {
                 margin-top: 180px;
+            }
+            
+            .controls-panel {
+                height: 110px;
             }
         }
         
@@ -743,6 +757,11 @@
             
             .controls-panel {
                 padding: 12px;
+                height: 120px;
+            }
+            
+            .controls-row {
+                gap: 10px;
             }
         }
         
@@ -796,6 +815,11 @@
             
             .controls-panel {
                 top: 55px;
+                height: 130px;
+            }
+            
+            .controls-wrapper {
+                padding: 0 10px;
             }
         }
         
@@ -816,6 +840,7 @@
             .controls-panel {
                 padding: 10px;
                 top: 50px;
+                height: 140px;
             }
             
             .bimester-card {
@@ -873,30 +898,32 @@
     </header>
     
     <div class="controls-panel">
-        <div class="controls-row">
-            <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
-            
-            <div class="controls-center">
-                <div class="form-group turma">
-                    <label for="class-select">Selecione a Turma:</label>
-                    <select id="class-select">
-                        <option value="">-- Selecione uma turma --</option>
-                    </select>
+        <div class="controls-wrapper">
+            <div class="controls-row">
+                <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
+                
+                <div class="controls-center">
+                    <div class="form-group turma">
+                        <label for="class-select">Selecione a Turma:</label>
+                        <select id="class-select">
+                            <option value="">-- Selecione uma turma --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group aluno">
+                        <label for="student-select">Selecione o Aluno:</label>
+                        <select id="student-select" disabled>
+                            <option value="">-- Primeiro selecione uma turma --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group btn-container">
+                        <button id="load-data" class="btn" disabled>Carregar Dados</button>
+                    </div>
                 </div>
                 
-                <div class="form-group aluno">
-                    <label for="student-select">Selecione o Aluno:</label>
-                    <select id="student-select" disabled>
-                        <option value="">-- Primeiro selecione uma turma --</option>
-                    </select>
-                </div>
-                
-                <div class="form-group btn-container">
-                    <button id="load-data" class="btn" disabled>Carregar Dados</button>
-                </div>
+                <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
             </div>
-            
-            <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
         </div>
     </div>
     
@@ -946,6 +973,7 @@
                     const option = document.createElement('option');
                     option.value = turma;
                     option.textContent = turma;
+                    option.style.textAlign = "center"; // Centraliza opções
                     classSelect.appendChild(option);
                 });
 
@@ -960,16 +988,20 @@
         classSelect.addEventListener('change', async function () {
             const turma = this.value;
 
-            // Aplica estilo quando turma selecionada - texto centralizado
+            // Centraliza o texto da turma selecionada
             if (turma) {
                 classSelect.classList.add('turma-selecionada');
-                classSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
-                // Garante que o texto no campo fechado fique centralizado
                 classSelect.style.textAlign = "center";
+                // Força o texto a ficar centralizado
+                classSelect.style.textAlignLast = "center";
+                classSelect.style.webkitTextAlignLast = "center";
+                classSelect.style.mozTextAlignLast = "center";
             } else {
                 classSelect.classList.remove('turma-selecionada');
-                classSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
                 classSelect.style.textAlign = "left";
+                classSelect.style.textAlignLast = "auto";
+                classSelect.style.webkitTextAlignLast = "auto";
+                classSelect.style.mozTextAlignLast = "auto";
             }
 
             studentSelect.disabled = true;
