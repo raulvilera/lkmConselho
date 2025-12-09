@@ -18,6 +18,8 @@
             --faltas-cor: #ff9800;
             --card-bg: #4a5568;
             --grid-gap: 12px;
+            --turma-selected-bg: #ffeb3b;
+            --aluno-selected-bg: #1565c0;
         }
         
         * {
@@ -195,13 +197,66 @@
             border-radius: 6px;
             font-size: 0.95rem;
             background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             box-shadow: 
                 inset 0 1px 3px rgba(0,0,0,0.05),
                 0 1px 2px rgba(0,0,0,0.05);
             width: 100%;
             color: #495057;
-            text-align: center;
+            text-align: left;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            padding-right: 35px;
+        }
+        
+        /* ESTILOS PARA TURMA SELECIONADA */
+        select.turma-selecionada {
+            background-color: var(--turma-selected-bg) !important;
+            color: #000000 !important;
+            font-weight: 800 !important;
+            border-color: #ffc107 !important;
+            box-shadow: 
+                inset 0 1px 3px rgba(0,0,0,0.1),
+                0 0 0 2px rgba(255, 193, 7, 0.3) !important;
+        }
+        
+        /* ESTILOS PARA ALUNO SELECIONADO */
+        select.aluno-selecionado {
+            background-color: var(--aluno-selected-bg) !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            border-color: #0d47a1 !important;
+            box-shadow: 
+                inset 0 1px 3px rgba(0,0,0,0.1),
+                0 0 0 2px rgba(13, 71, 161, 0.3) !important;
+        }
+        
+        /* ESTILOS PARA OPTIONS - ALINHADO À ESQUERDA */
+        select option {
+            text-align: left !important;
+            padding: 8px 12px !important;
+            font-weight: normal !important;
+            background-color: white !important;
+            color: #333 !important;
+            border-bottom: 1px solid #eee;
+        }
+        
+        select option:hover,
+        select option:focus,
+        select option:checked {
+            background-color: #e3f2fd !important;
+            color: #1565c0 !important;
+            font-weight: 600 !important;
+        }
+        
+        select option[value=""] {
+            color: #6c757d !important;
+            font-style: italic;
         }
         
         select:focus, input:focus {
@@ -626,6 +681,11 @@
                 font-size: 0.7rem;
                 line-height: 1.0;
             }
+            
+            select, input {
+                font-size: 0.9rem;
+                padding: 12px 12px 12px 12px;
+            }
         }
         
         @media (max-width: 400px) {
@@ -658,6 +718,11 @@
             .subject-cell {
                 font-size: 0.6rem;
                 line-height: 0.9;
+            }
+            
+            select.turma-selecionada,
+            select.aluno-selecionado {
+                font-size: 0.9rem;
             }
         }
         
@@ -778,8 +843,14 @@
         classSelect.addEventListener('change', async function () {
             const turma = this.value;
 
-            if (turma) classSelect.classList.add('turma-selecionada');
-            else classSelect.classList.remove('turma-selecionada');
+            // Aplica estilo quando turma selecionada
+            if (turma) {
+                classSelect.classList.add('turma-selecionada');
+                classSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
+            } else {
+                classSelect.classList.remove('turma-selecionada');
+                classSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
+            }
 
             studentSelect.disabled = true;
             loadButton.disabled = true;
@@ -788,6 +859,7 @@
 
             if (!turma) {
                 studentSelect.innerHTML = '<option value="">-- Primeiro selecione uma turma --</option>';
+                studentSelect.classList.remove('aluno-selecionado');
                 showNoData();
                 return;
             }
@@ -825,8 +897,14 @@
             const hasStudent = !!this.value;
             loadButton.disabled = !hasStudent;
 
-            if (hasStudent) studentSelect.classList.add('aluno-selecionado');
-            else studentSelect.classList.remove('aluno-selecionado');
+            // Aplica estilo quando aluno selecionado
+            if (hasStudent) {
+                studentSelect.classList.add('aluno-selecionado');
+                studentSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
+            } else {
+                studentSelect.classList.remove('aluno-selecionado');
+                studentSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
+            }
 
             if (hasStudent) {
                 currentStudentIndex = currentStudents.indexOf(this.value);
@@ -855,6 +933,7 @@
 
             studentSelect.value = currentStudents[currentStudentIndex];
             studentSelect.classList.add('aluno-selecionado');
+            studentSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
 
             // Carrega os dados do aluno automaticamente
             await loadStudentData();
