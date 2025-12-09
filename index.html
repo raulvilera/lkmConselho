@@ -40,10 +40,10 @@
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-top: 160px; /* Espaço para header + controls-panel */
+            padding-top: 160px;
         }
         
-        /* HEADER FIXO - AUMENTADO O Z-INDEX */
+        /* HEADER FIXO */
         header {
             background: linear-gradient(135deg, var(--primary-color), #1a252f);
             color: white;
@@ -80,7 +80,7 @@
             padding: 0 5px;
         }
         
-        /* CONTROLS PANEL FIXO - AUMENTADO O Z-INDEX */
+        /* CONTROLS PANEL FIXO */
         .controls-panel {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 15px;
@@ -201,19 +201,16 @@
             min-width: 0;
         }
         
-        /* TURMA - LARGURA AJUSTÁVEL */
         .form-group.turma {
             min-width: 180px;
             max-width: 250px;
         }
         
-        /* ALUNO - LARGURA FLEXÍVEL */
         .form-group.aluno {
             min-width: 250px;
             flex: 2;
         }
         
-        /* BOTÃO CARREGAR DADOS */
         .form-group.btn-container {
             min-width: 140px;
             max-width: 160px;
@@ -254,7 +251,6 @@
             width: 100%;
         }
         
-        /* TURMA SELECIONADA - TEXTO CENTRALIZADO */
         select.turma-selecionada {
             text-align: center !important;
             background-color: var(--turma-selected-bg) !important;
@@ -267,17 +263,14 @@
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
         }
         
-        /* CENTRALIZAR TURMA NO CAMPO - IMPORTANTE */
         #class-select.turma-selecionada {
             text-align: center !important;
         }
         
-        /* Garantir que as opções da turma também fiquem centralizadas quando abertas */
         #class-select.turma-selecionada option {
             text-align: center !important;
         }
         
-        /* ALUNO SELECIONADO */
         select.aluno-selecionado {
             background-color: var(--aluno-selected-bg) !important;
             color: #ffffff !important;
@@ -289,7 +282,6 @@
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
         }
         
-        /* ESTILOS PARA OPTIONS - COM CORES ALTERNADAS */
         select option {
             text-align: left !important;
             padding: 10px 15px !important;
@@ -298,7 +290,6 @@
             font-size: 0.9rem;
         }
         
-        /* DROPDOWN DE TURMAS - CORES ALTERNADAS VERDE/BRANCO */
         #class-select option:nth-child(odd):not(:first-child) {
             background-color: var(--turma-verde) !important;
             color: #000000 !important;
@@ -309,14 +300,12 @@
             color: #000000 !important;
         }
         
-        /* Primeira opção (placeholder) - estilo especial */
         #class-select option:first-child {
             background-color: #ffffff !important;
             color: #6c757d !important;
             font-style: italic;
         }
         
-        /* DROPDOWN DE ALUNOS - CORES ALTERNADAS AZUL CLARO/BRANCO */
         #student-select option:nth-child(odd):not(:first-child) {
             background-color: var(--aluno-azul) !important;
             color: #000000 !important;
@@ -327,14 +316,12 @@
             color: #000000 !important;
         }
         
-        /* Primeira opção (placeholder) - estilo especial */
         #student-select option:first-child {
             background-color: #ffffff !important;
             color: #6c757d !important;
             font-style: italic;
         }
         
-        /* OPÇÃO SELECIONADA NO DROPDOWN - DESTAQUE */
         select option:checked,
         select option[selected] {
             background-color: var(--dropdown-selected-bg) !important;
@@ -342,7 +329,6 @@
             font-weight: 800 !important;
         }
         
-        /* HOVER NAS OPTIONS */
         select option:hover,
         select option:focus {
             background-color: #e3f2fd !important;
@@ -381,19 +367,17 @@
                 0 3px 6px rgba(0,0,0,0.15);
         }
         
-        /* CONTAINER PRINCIPAL DOS CARDS - REMOVIDA MARGEM SUPERIOR */
         .container {
             width: 100%;
             margin: 0 auto;
             padding: 15px;
             max-width: 100%;
             min-width: 320px;
-            margin-top: 0; /* Removido margin-top pois o padding-top do body já cuida do espaço */
+            margin-top: 0;
             position: relative;
             z-index: 1;
         }
         
-        /* CONTAINER PRINCIPAL DOS CARDS - RESPONSIVO */
         .results-container {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -404,7 +388,6 @@
             overflow: visible;
         }
         
-        /* CARD DE BIMESTRE - RESPONSIVO */
         .bimester-card {
             background-color: var(--card-bg);
             border-radius: 8px;
@@ -451,7 +434,6 @@
             min-height: 0;
         }
         
-        /* GRID DE DISCIPLINAS - ALTURAS FLEXÍVEIS */
         .subject-grid {
             display: flex;
             flex-direction: column;
@@ -573,7 +555,7 @@
             background: linear-gradient(135deg, #229954, #27ae60);
         }
         
-        /* ESTILO ESPECÍFICO PARA NOTAS DO 5º CONCEITO */
+        /* CORREÇÃO APLICADA: ESTILO ESPECÍFICO PARA NOTAS DO 5º CONCEITO */
         .bimester-card.conceito5 .grade-cell.nota-alta {
             background-color: #2196f3 !important; /* Azul para notas 5 ou mais */
         }
@@ -582,7 +564,6 @@
             background-color: #ff5252 !important; /* Vermelho para notas 4 ou abaixo */
         }
         
-        /* MODAL EXPANDIDO */
         .bimester-card.expanded {
             position: fixed;
             top: 50%;
@@ -642,7 +623,6 @@
             box-shadow: 0 3px 6px rgba(0,0,0,0.04);
         }
         
-        /* RESPONSIVIDADE AVANÇADA */
         @media (max-width: 1600px) {
             .results-container {
                 grid-template-columns: repeat(5, minmax(240px, 1fr));
@@ -930,7 +910,6 @@
             }
         }
         
-        /* ROLAGEM PERSONALIZADA */
         .bimester-content::-webkit-scrollbar,
         .subject-rows-container::-webkit-scrollbar {
             width: 6px;
@@ -1002,10 +981,8 @@
     <div class="overlay" id="overlay"></div>
 
     <script>
-        // URL DO WEB APP
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxx5yJ5jhPu6culFODuuvcwadCYQE9JR_fwLEaq0lmufrlx7r2eM2qFEi313EnAIKu7/exec';
 
-        // Elementos DOM
         const classSelect = document.getElementById('class-select');
         const studentSelect = document.getElementById('student-select');
         const loadButton = document.getElementById('load-data');
@@ -1014,13 +991,11 @@
         const nextBtn = document.getElementById('next-btn');
         const overlay = document.getElementById('overlay');
 
-        // Variáveis globais para navegação
         let currentStudents = [];
         let currentStudentIndex = -1;
         let currentTurma = '';
         let currentExpandedCard = null;
 
-        /* ===================== CARREGAR TURMAS ===================== */
         async function populateClassSelect() {
             try {
                 showLoading('Carregando turmas...');
@@ -1036,7 +1011,6 @@
                     option.value = turma;
                     option.textContent = turma;
                     option.style.textAlign = "center";
-                    // Aplica cores alternadas via JavaScript também
                     if (index % 2 === 0) {
                         option.style.backgroundColor = "#d4edda";
                     } else {
@@ -1052,11 +1026,9 @@
             }
         }
 
-        /* ===================== CARREGAR ALUNOS ===================== */
         classSelect.addEventListener('change', async function () {
             const turma = this.value;
 
-            // Centraliza o texto da turma selecionada
             if (turma) {
                 classSelect.classList.add('turma-selecionada');
                 classSelect.style.textAlign = "center";
@@ -1093,7 +1065,6 @@
 
                 studentSelect.innerHTML = '<option value="">-- Selecione um aluno --</option>';
 
-                // Armazena a lista de alunos para navegação
                 currentStudents = Array.isArray(alunos) ? alunos : [];
                 currentTurma = turma;
 
@@ -1102,7 +1073,6 @@
                     option.value = a;
                     option.textContent = a;
                     option.style.fontWeight = "700";
-                    // Aplica cores alternadas via JavaScript
                     if (index % 2 === 0) {
                         option.style.backgroundColor = "#d1ecf1";
                     } else {
@@ -1118,12 +1088,10 @@
             }
         });
 
-        /* Habilitar botão quando aluno for selecionado */
         studentSelect.addEventListener('change', function () {
             const hasStudent = !!this.value;
             loadButton.disabled = !hasStudent;
 
-            // Aplica estilo quando aluno selecionado
             if (hasStudent) {
                 studentSelect.classList.add('aluno-selecionado');
                 studentSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
@@ -1142,7 +1110,6 @@
             }
         });
 
-        /* ===================== NAVEGAÇÃO ENTRE ALUNOS ===================== */
         function updateNavigationButtons() {
             prevBtn.disabled = currentStudentIndex <= 0;
             nextBtn.disabled = currentStudentIndex >= currentStudents.length - 1 || currentStudents.length === 0;
@@ -1161,7 +1128,6 @@
             studentSelect.classList.add('aluno-selecionado');
             studentSelect.style.backgroundImage = "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")";
 
-            // Carrega os dados do aluno automaticamente
             await loadStudentData();
             updateNavigationButtons();
         }
@@ -1169,7 +1135,6 @@
         prevBtn.addEventListener('click', () => navigateStudents('prev'));
         nextBtn.addEventListener('click', () => navigateStudents('next'));
 
-        /* ===================== CARREGAR DADOS DO ALUNO ===================== */
         loadButton.addEventListener('click', loadStudentData);
 
         async function loadStudentData() {
@@ -1187,7 +1152,6 @@
 
                 if (dados.error) throw new Error(dados.error);
 
-                // Verifica estrutura mínima esperada
                 const hasNotas = Array.isArray(dados.notas) && dados.notas.length >= 1;
                 const hasDisciplinas = Array.isArray(dados.disciplinas);
                 if (!hasNotas || !hasDisciplinas) {
@@ -1196,7 +1160,6 @@
                     return;
                 }
 
-                // normalize shape: garantir indices 0..3 (bimestres)
                 const notas = Array.isArray(dados.notas) ? dados.notas : [];
                 const faltas = Array.isArray(dados.faltas) ? dados.faltas : [[],[],[],[]];
                 const disciplinas = Array.isArray(dados.disciplinas) ? dados.disciplinas : [];
@@ -1212,11 +1175,9 @@
             }
         }
 
-        /* ===================== EXIBIR DADOS DO ALUNO ===================== */
         function displayStudentData(dados) {
             resultsContainer.innerHTML = "";
 
-            // Valida
             if (!dados || !Array.isArray(dados.disciplinas) || !Array.isArray(dados.notas)) {
                 showError("Estrutura de dados inválida.");
                 return;
@@ -1225,18 +1186,15 @@
             const disciplinas = dados.disciplinas;
             const disciplinasCount = disciplinas.length || 0;
 
-            // Ensure notas and faltas are arrays of 4 arrays
             const notas = [];
             const faltas = [];
             for (let b = 0; b < 4; b++) {
                 notas[b] = Array.isArray(dados.notas[b]) ? dados.notas[b] : new Array(disciplinasCount).fill(null);
                 faltas[b] = Array.isArray(dados.faltas[b]) ? dados.faltas[b] : new Array(disciplinasCount).fill(0);
-                // if shorter, pad
                 if (notas[b].length < disciplinasCount) notas[b] = notas[b].concat(new Array(disciplinasCount - notas[b].length).fill(null));
                 if (faltas[b].length < disciplinasCount) faltas[b] = faltas[b].concat(new Array(disciplinasCount - faltas[b].length).fill(0));
             }
 
-            // Cria cards para cada bimestre (1..4) e 5º conceito
             for (let b = 0; b < 5; b++) {
                 const card = document.createElement('div');
                 card.className = "bimester-card";
@@ -1253,7 +1211,6 @@
                     header.textContent = "5º CONCEITO";
                 }
 
-                // Adiciona funcionalidade de duplo clique para expandir
                 header.addEventListener('dblclick', function() {
                     toggleCardExpansion(card);
                 });
@@ -1261,11 +1218,9 @@
                 const content = document.createElement('div');
                 content.className = "bimester-content";
 
-                // Cria grid container
                 const gridContainer = document.createElement('div');
                 gridContainer.className = "subject-grid";
 
-                // Cabeçalhos da grid
                 const headerRow = document.createElement('div');
                 headerRow.className = "grid-header-row";
                 
@@ -1286,41 +1241,33 @@
                 headerRow.appendChild(header3);
                 gridContainer.appendChild(headerRow);
 
-                // Container para as linhas de disciplinas com scroll
                 const rowsContainer = document.createElement('div');
                 rowsContainer.className = "subject-rows-container";
 
-                // Itera pelas disciplinas
                 for (let i = 0; i < disciplinasCount; i++) {
                     const nomeDisc = disciplinas[i] || (`Disciplina ${i+1}`);
                     
-                    // Formata o nome da disciplina para quebras adequadas
                     let displayNome = formatDisciplinaNome(nomeDisc);
                     
                     const row = document.createElement('div');
                     row.className = "subject-row";
                     
-                    // Célula do nome da disciplina
                     const nomeCell = document.createElement("div");
                     nomeCell.className = "subject-cell";
                     
-                    // Se o nome formatado contém <br>, usamos innerHTML
                     if (displayNome.includes('<br>')) {
                         nomeCell.innerHTML = displayNome;
                     } else {
                         nomeCell.textContent = displayNome;
                     }
 
-                    // Célula da nota
                     const gradeCell = document.createElement("div");
                     gradeCell.className = "grade-cell";
 
-                    // Célula das faltas
                     const faltasCell = document.createElement("div");
                     faltasCell.className = "faltas-cell";
 
                     if (b < 4) {
-                        // Bimestres 1-4 - NOTAS INTEIRAS
                         const notaRaw = notas[b][i];
                         const faltaRaw = faltas[b][i];
 
@@ -1332,29 +1279,25 @@
 
                         const falta = (faltaRaw === null || faltaRaw === undefined || faltaRaw === "") ? 0 : (parseInt(faltaRaw) || 0);
 
-                        // Aplica a cor baseada na nota (NOTAS INTEIRAS)
                         if (nota !== null) {
+                            // Lógica para bimestres 1-4
                             if (nota >= 5) {
                                 gradeCell.classList.add("nota-alta");
                             } else {
                                 gradeCell.classList.add("nota-baixa");
                             }
-                            // Exibe como número inteiro SEM VÍRGULAS
                             gradeCell.textContent = Math.round(nota);
                         } else {
                             gradeCell.classList.add("sem-nota");
                             gradeCell.textContent = "--";
                         }
 
-                        // Preenche a célula de faltas
                         faltasCell.textContent = falta;
                     } else {
-                        // 5º Conceito (médias e totais) - INTEIROS SEM VÍRGULAS
                         let medias = Array.isArray(dados.conceito5) && dados.conceito5.length >= disciplinasCount ? 
                             dados.conceito5.slice(0, disciplinasCount) : null;
                         
                         if (!medias) {
-                            // Calcula as médias se não vierem do backend
                             medias = new Array(disciplinasCount).fill(null);
                             for (let i = 0; i < disciplinasCount; i++) {
                                 let soma = 0, cont = 0;
@@ -1366,7 +1309,6 @@
                                     }
                                 }
                                 
-                                // Cálculo da média com arredondamento para inteiro
                                 if (cont > 0) {
                                     const mediaCalculada = soma / cont;
                                     medias[i] = Math.round(mediaCalculada);
@@ -1379,7 +1321,6 @@
                         const totalFaltasPorDisciplina = Array.isArray(dados.totalFaltasPorDisciplina) && dados.totalFaltasPorDisciplina.length >= disciplinasCount
                             ? dados.totalFaltasPorDisciplina
                             : (function() {
-                                // calcula somando faltas por disciplina
                                 const totals = new Array(disciplinasCount).fill(0);
                                 for (let i = 0; i < disciplinasCount; i++) {
                                     let tot = 0;
@@ -1392,22 +1333,20 @@
                         const media = medias[i];
                         const faltasDisc = totalFaltasPorDisciplina[i] || 0;
 
-                        // CORREÇÃO: Lógica específica para 5º Conceito
-                        // 5 ou mais: azul, 4 ou abaixo: vermelho
+                        // CORREÇÃO APLICADA: Lógica específica para 5º Conceito
+                        // Notas 5 ou acima: azul, Notas 4 ou abaixo: vermelho
                         if (media !== null && media !== undefined && !isNaN(media)) {
                             if (media >= 5) {
-                                gradeCell.classList.add("nota-alta");
+                                gradeCell.classList.add("nota-alta"); // Azul
                             } else {
-                                gradeCell.classList.add("nota-baixa");
+                                gradeCell.classList.add("nota-baixa"); // Vermelho
                             }
-                            // Exibe como número inteiro SEM VÍRGULAS
                             gradeCell.textContent = Math.round(media);
                         } else {
                             gradeCell.classList.add("sem-nota");
                             gradeCell.textContent = "--";
                         }
 
-                        // Preenche a célula de faltas totais com estilo específico
                         faltasCell.textContent = faltasDisc;
                         faltasCell.classList.add("faltas-total-cell");
                     }
@@ -1426,50 +1365,39 @@
             }
         }
 
-        /* ===================== FUNÇÃO PARA FORMATAR NOME DA DISCIPLINA ===================== */
         function formatDisciplinaNome(nome) {
-            // Converte para maiúsculas e remove espaços extras
             let nomeFormatado = nome.toUpperCase().trim();
             
-            // Se já tiver duas palavras, coloca uma embaixo da outra
             const palavras = nomeFormatado.split(/\s+/);
             
             if (palavras.length === 2) {
-                // Duas palavras: uma embaixo da outra
                 return palavras[0] + '<br>' + palavras[1];
             } else if (palavras.length > 2) {
-                // Mais de duas palavras: tenta agrupar de forma equilibrada
                 const meio = Math.ceil(palavras.length / 2);
                 const primeiraLinha = palavras.slice(0, meio).join(' ');
                 const segundaLinha = palavras.slice(meio).join(' ');
                 return primeiraLinha + '<br>' + segundaLinha;
             }
             
-            // Uma palavra apenas
             return nomeFormatado;
         }
 
-        /* ===================== FUNÇÃO PARA EXPANDIR/RETRAIR CARD ===================== */
         function toggleCardExpansion(card) {
-            // Se o card já está expandido, retrai
             if (card.classList.contains('expanded')) {
                 card.classList.remove('expanded');
                 overlay.style.display = 'none';
                 currentExpandedCard = null;
             } else {
-                // Remove a classe expanded de todos os cards
                 document.querySelectorAll('.bimester-card').forEach(c => {
                     c.classList.remove('expanded');
                 });
                 
-                // Adiciona a classe expanded no card clicado
                 card.classList.add('expanded');
                 overlay.style.display = 'block';
                 currentExpandedCard = card;
             }
         }
 
-        // Fechar card expandido ao clicar no overlay
         overlay.addEventListener('click', function() {
             if (currentExpandedCard) {
                 currentExpandedCard.classList.remove('expanded');
@@ -1478,7 +1406,6 @@
             }
         });
 
-        /* ===================== FUNÇÕES DE AUXÍLIO ===================== */
         function showLoading(msg) {
             resultsContainer.innerHTML = `<div class="loading">${msg}</div>`;
         }
@@ -1496,7 +1423,6 @@
             resultsContainer.innerHTML = '<div class="no-data">Selecione uma turma e um aluno para visualizar os dados</div>';
         }
 
-        /* ===================== INICIAR ===================== */
         document.addEventListener("DOMContentLoaded", populateClassSelect);
     </script>
 </body>
