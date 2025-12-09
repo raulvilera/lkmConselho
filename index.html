@@ -37,15 +37,7 @@
             overflow-x: hidden;
         }
         
-        .container {
-            width: 100%;
-            margin: 0 auto;
-            padding: 15px;
-            max-width: 100%;
-            min-width: 320px;
-            padding-top: 100px; /* Espaço para header fixo */
-        }
-        
+        /* HEADER FIXO */
         header {
             background: linear-gradient(135deg, var(--primary-color), #1a252f);
             color: white;
@@ -61,6 +53,7 @@
             z-index: 1000;
             width: 100%;
             overflow: hidden;
+            height: auto;
         }
         
         header::before {
@@ -81,17 +74,21 @@
             padding: 0 5px;
         }
         
-        /* CONTROLS PANEL RESPONSIVO - NOVO LAYOUT */
+        /* CONTROLS PANEL FIXO */
         .controls-panel {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 0 0 10px 10px;
             box-shadow: 
                 0 4px 15px rgba(0,0,0,0.08),
                 0 2px 4px rgba(0,0,0,0.04),
                 inset 0 1px 0 rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-            position: relative;
+            position: fixed;
+            top: 60px; /* Ajustado para ficar logo abaixo do header */
+            left: 0;
+            right: 0;
+            z-index: 999;
+            width: 100%;
             border: 1px solid rgba(255,255,255,0.5);
         }
         
@@ -174,9 +171,27 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            flex: 1;
-            min-width: 180px;
+            flex-shrink: 0;
             text-align: center;
+        }
+        
+        /* TURMA - LARGURA AJUSTÁVEL AO CONTEÚDO */
+        .form-group.turma {
+            min-width: 150px;
+            max-width: 250px;
+            width: auto;
+        }
+        
+        /* ALUNO - LARGURA AJUSTÁVEL AO NOME */
+        .form-group.aluno {
+            min-width: 200px;
+            flex: 1;
+        }
+        
+        /* BOTÃO CARREGAR DADOS */
+        .form-group.btn-container {
+            min-width: 140px;
+            max-width: 160px;
         }
         
         label {
@@ -191,7 +206,7 @@
             text-align: center;
         }
         
-        select, input {
+        select {
             padding: 10px 12px;
             border: 1px solid #ced4da;
             border-radius: 6px;
@@ -201,7 +216,6 @@
             box-shadow: 
                 inset 0 1px 3px rgba(0,0,0,0.05),
                 0 1px 2px rgba(0,0,0,0.05);
-            width: 100%;
             color: #495057;
             text-align: left;
             appearance: none;
@@ -212,6 +226,15 @@
             background-position: right 10px center;
             background-size: 16px;
             padding-right: 35px;
+            width: 100%;
+        }
+        
+        /* AJUSTE ESPECIAL PARA O CAMPO DO ALUNO */
+        #student-select {
+            min-width: 100%;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* ESTILOS PARA TURMA SELECIONADA */
@@ -259,7 +282,7 @@
             font-style: italic;
         }
         
-        select:focus, input:focus {
+        select:focus {
             border-color: var(--secondary-color);
             outline: none;
             box-shadow: 
@@ -288,6 +311,16 @@
             transform: translateY(-1px);
             box-shadow: 
                 0 3px 6px rgba(0,0,0,0.15);
+        }
+        
+        /* CONTAINER PRINCIPAL DOS CARDS - COM MARGEM PARA OS ELEMENTOS FIXOS */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+            max-width: 100%;
+            min-width: 320px;
+            margin-top: 160px; /* Espaço para header (60px) + controls-panel (100px) fixos */
         }
         
         /* CONTAINER PRINCIPAL DOS CARDS - RESPONSIVO */
@@ -552,6 +585,11 @@
                 font-size: 0.9rem;
                 padding: 10px 6px;
             }
+            
+            .form-group.turma {
+                min-width: 130px;
+                max-width: 200px;
+            }
         }
         
         @media (max-width: 1200px) {
@@ -582,6 +620,15 @@
                 font-size: 0.6rem;
                 line-height: 1.0;
             }
+            
+            .form-group.turma {
+                min-width: 120px;
+                max-width: 180px;
+            }
+            
+            .container {
+                margin-top: 170px;
+            }
         }
         
         @media (max-width: 992px) {
@@ -600,15 +647,20 @@
                 grid-row: 2 / 3;
             }
             
-            .form-group {
-                min-width: 150px;
+            .form-group.turma {
+                min-width: 110px;
+                max-width: 160px;
+            }
+            
+            .container {
+                margin-top: 180px;
             }
         }
         
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
-                padding-top: 90px;
+                margin-top: 190px;
             }
             
             .results-container {
@@ -633,6 +685,21 @@
             
             .form-group {
                 min-width: 100%;
+                max-width: 100%;
+            }
+            
+            .form-group.turma {
+                min-width: 100%;
+                max-width: 100%;
+            }
+            
+            .form-group.aluno {
+                min-width: 100%;
+            }
+            
+            .form-group.btn-container {
+                min-width: 100%;
+                max-width: 100%;
             }
             
             .bimester-header {
@@ -644,6 +711,10 @@
             .subject-cell {
                 font-size: 0.55rem;
                 line-height: 0.95;
+            }
+            
+            .controls-panel {
+                padding: 12px;
             }
         }
         
@@ -682,16 +753,28 @@
                 line-height: 1.0;
             }
             
-            select, input {
+            select {
                 font-size: 0.9rem;
                 padding: 12px 12px 12px 12px;
+            }
+            
+            .container {
+                margin-top: 200px;
+            }
+            
+            header {
+                padding: 12px 8px;
+            }
+            
+            .controls-panel {
+                top: 55px;
             }
         }
         
         @media (max-width: 400px) {
             .container {
                 padding: 8px;
-                padding-top: 85px;
+                margin-top: 190px;
             }
             
             header {
@@ -704,6 +787,7 @@
             
             .controls-panel {
                 padding: 10px;
+                top: 50px;
             }
             
             .bimester-card {
@@ -723,6 +807,11 @@
             select.turma-selecionada,
             select.aluno-selecionado {
                 font-size: 0.9rem;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
             }
         }
         
@@ -751,39 +840,39 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>SISTEMA INTEGRADO CONSELHO DE CLASSE</h1>
-        </header>
-        
-        <div class="controls-panel">
-            <div class="controls-row">
-                <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
-                
-                <div class="controls-center">
-                    <div class="form-group turma">
-                        <label for="class-select">Selecione a Turma:</label>
-                        <select id="class-select">
-                            <option value="">-- Selecione uma turma --</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group aluno">
-                        <label for="student-select">Selecione o Aluno:</label>
-                        <select id="student-select" disabled>
-                            <option value="">-- Primeiro selecione uma turma --</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group btn-container">
-                        <button id="load-data" class="btn" disabled>Carregar Dados</button>
-                    </div>
+    <header>
+        <h1>SISTEMA INTEGRADO CONSELHO DE CLASSE</h1>
+    </header>
+    
+    <div class="controls-panel">
+        <div class="controls-row">
+            <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
+            
+            <div class="controls-center">
+                <div class="form-group turma">
+                    <label for="class-select">Selecione a Turma:</label>
+                    <select id="class-select">
+                        <option value="">-- Selecione uma turma --</option>
+                    </select>
                 </div>
                 
-                <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
+                <div class="form-group aluno">
+                    <label for="student-select">Selecione o Aluno:</label>
+                    <select id="student-select" disabled>
+                        <option value="">-- Primeiro selecione uma turma --</option>
+                    </select>
+                </div>
+                
+                <div class="form-group btn-container">
+                    <button id="load-data" class="btn" disabled>Carregar Dados</button>
+                </div>
             </div>
+            
+            <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
         </div>
-        
+    </div>
+    
+    <div class="container">
         <div id="results" class="results-container">
             <div class="no-data">Selecione uma turma e um aluno para visualizar os dados</div>
         </div>
@@ -886,11 +975,55 @@
                 });
 
                 studentSelect.disabled = false;
+                
+                // Ajusta a largura do select baseado no maior nome
+                adjustSelectWidth(studentSelect);
             } catch (err) {
                 studentSelect.innerHTML = '<option value="">Erro ao carregar alunos</option>';
                 console.error(err);
             }
         });
+
+        /* Função para ajustar a largura do select baseado no conteúdo */
+        function adjustSelectWidth(selectElement) {
+            // Cria um elemento temporário para medir o texto
+            const tempElement = document.createElement('span');
+            tempElement.style.visibility = 'hidden';
+            tempElement.style.position = 'absolute';
+            tempElement.style.whiteSpace = 'nowrap';
+            tempElement.style.fontSize = window.getComputedStyle(selectElement).fontSize;
+            tempElement.style.fontFamily = window.getComputedStyle(selectElement).fontFamily;
+            tempElement.style.fontWeight = window.getComputedStyle(selectElement).fontWeight;
+            
+            document.body.appendChild(tempElement);
+            
+            // Encontra o texto mais longo
+            let maxWidth = 0;
+            const options = selectElement.options;
+            
+            for (let i = 0; i < options.length; i++) {
+                tempElement.textContent = options[i].textContent;
+                const width = tempElement.getBoundingClientRect().width;
+                if (width > maxWidth) {
+                    maxWidth = width;
+                }
+            }
+            
+            // Remove o elemento temporário
+            document.body.removeChild(tempElement);
+            
+            // Ajusta a largura do select (com padding e seta)
+            const padding = 70; // padding-left + padding-right + seta
+            const newWidth = Math.min(Math.max(maxWidth + padding, 200), window.innerWidth - 300);
+            
+            selectElement.style.width = newWidth + 'px';
+            
+            // Ajusta também a largura do container pai
+            const formGroup = selectElement.closest('.form-group');
+            if (formGroup) {
+                formGroup.style.minWidth = newWidth + 'px';
+            }
+        }
 
         /* Habilitar botão quando aluno for selecionado */
         studentSelect.addEventListener('change', function () {
