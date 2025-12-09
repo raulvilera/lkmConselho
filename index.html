@@ -43,7 +43,6 @@
             padding-top: 160px;
         }
         
-        /* HEADER FIXO */
         header {
             background: linear-gradient(135deg, var(--primary-color), #1a252f);
             color: white;
@@ -80,7 +79,6 @@
             padding: 0 5px;
         }
         
-        /* CONTROLS PANEL FIXO */
         .controls-panel {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 15px;
@@ -546,22 +544,12 @@
             font-weight: bold;
         }
         
-        /* 5º CONCEITO - COR ESPECIAL PARA O CABEÇALHO */
         .bimester-card.conceito5 .bimester-header {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
         }
         
         .bimester-card.conceito5 .bimester-header:hover {
             background: linear-gradient(135deg, #229954, #27ae60);
-        }
-        
-        /* CORREÇÃO APLICADA: ESTILO ESPECÍFICO PARA NOTAS DO 5º CONCEITO */
-        .bimester-card.conceito5 .grade-cell.nota-alta {
-            background-color: #2196f3 !important; /* Azul para notas 5 ou mais */
-        }
-        
-        .bimester-card.conceito5 .grade-cell.nota-baixa {
-            background-color: #ff5252 !important; /* Vermelho para notas 4 ou abaixo */
         }
         
         .bimester-card.expanded {
@@ -1280,7 +1268,6 @@
                         const falta = (faltaRaw === null || faltaRaw === undefined || faltaRaw === "") ? 0 : (parseInt(faltaRaw) || 0);
 
                         if (nota !== null) {
-                            // Lógica para bimestres 1-4
                             if (nota >= 5) {
                                 gradeCell.classList.add("nota-alta");
                             } else {
@@ -1333,13 +1320,12 @@
                         const media = medias[i];
                         const faltasDisc = totalFaltasPorDisciplina[i] || 0;
 
-                        // CORREÇÃO APLICADA: Lógica específica para 5º Conceito
-                        // Notas 5 ou acima: azul, Notas 4 ou abaixo: vermelho
                         if (media !== null && media !== undefined && !isNaN(media)) {
+                            // CORREÇÃO ESPECÍFICA PARA O 5º CONCEITO
                             if (media >= 5) {
-                                gradeCell.classList.add("nota-alta"); // Azul
+                                gradeCell.classList.add("nota-alta"); // Azul para notas 5 ou acima
                             } else {
-                                gradeCell.classList.add("nota-baixa"); // Vermelho
+                                gradeCell.classList.add("nota-baixa"); // Vermelho para notas 4 ou abaixo
                             }
                             gradeCell.textContent = Math.round(media);
                         } else {
