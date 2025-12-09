@@ -41,6 +41,7 @@
             padding: 15px;
             max-width: 100%;
             min-width: 320px;
+            padding-top: 100px; /* Espaço para header fixo */
         }
         
         header {
@@ -48,10 +49,15 @@
             color: white;
             padding: 15px 10px;
             text-align: center;
-            border-radius: 10px 10px 0 0;
-            margin-bottom: 20px;
+            border-radius: 0;
+            margin-bottom: 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            width: 100%;
             overflow: hidden;
         }
         
@@ -73,7 +79,7 @@
             padding: 0 5px;
         }
         
-        /* CONTROLS PANEL RESPONSIVO */
+        /* CONTROLS PANEL RESPONSIVO - NOVO LAYOUT */
         .controls-panel {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 15px;
@@ -83,51 +89,92 @@
                 0 2px 4px rgba(0,0,0,0.04),
                 inset 0 1px 0 rgba(255,255,255,0.8);
             margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
             position: relative;
             border: 1px solid rgba(255,255,255,0.5);
         }
         
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .controls-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
             gap: 12px;
-            width: 100%;
-            align-items: start;
+            justify-content: space-between;
         }
         
-        .nav-container {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            grid-column: 1 / -1;
-            order: 1;
+        .nav-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            height: 42px;
+            min-width: 90px;
+            max-width: 120px;
+            flex-shrink: 0;
+        }
+        
+        .nav-btn.prev {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 
+                0 3px 0 #a93226,
+                0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .nav-btn.prev:hover {
+            background: linear-gradient(145deg, #ec7063, #e74c3c);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 5px 0 #1a5276,
+                0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(145deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 
+                0 3px 0 #1a5276,
+                0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .nav-btn.next:hover {
+            background: linear-gradient(145deg, #3cb0fd, #3498db);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 5px 0 #1a5276,
+                0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: linear-gradient(145deg, #bdc3c7, #95a5a6);
+            box-shadow: 
+                0 2px 0 #7f8c8d,
+                0 3px 6px rgba(0,0,0,0.1);
+            cursor: not-allowed;
+            transform: none;
         }
         
         .controls-center {
-            display: contents;
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+            min-width: 0;
         }
         
         .form-group {
             display: flex;
             flex-direction: column;
-            min-width: 0;
-        }
-        
-        .form-group.turma {
-            grid-column: span 1;
-        }
-        
-        .form-group.aluno {
-            grid-column: span 2;
-        }
-        
-        .form-group.btn-container {
-            grid-column: span 1;
-            display: flex;
-            flex-direction: column;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
         }
         
         label {
@@ -139,6 +186,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-align: center;
         }
         
         select, input {
@@ -153,6 +201,7 @@
                 0 1px 2px rgba(0,0,0,0.05);
             width: 100%;
             color: #495057;
+            text-align: center;
         }
         
         select:focus, input:focus {
@@ -163,8 +212,12 @@
                 0 0 0 3px rgba(52, 152, 219, 0.15);
         }
         
-        /* BOTÕES RESPONSIVOS */
-        .nav-btn, .btn {
+        .btn {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
             padding: 10px 15px;
             font-size: 0.9rem;
             font-weight: 600;
@@ -172,56 +225,7 @@
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             height: 42px;
-            min-width: 120px;
-            flex: 1;
-        }
-        
-        .nav-btn {
-            background: linear-gradient(145deg, #3498db, #2980b9);
-            color: white;
-            box-shadow: 
-                0 3px 0 #1a5276,
-                0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        .nav-btn:hover {
-            background: linear-gradient(145deg, #3cb0fd, #3498db);
-            transform: translateY(-2px);
-            box-shadow: 
-                0 5px 0 #1a5276,
-                0 6px 12px rgba(0,0,0,0.2);
-        }
-        
-        .nav-btn.prev {
-            background: linear-gradient(145deg, #e74c3c, #c0392b);
-            box-shadow: 
-                0 3px 0 #a93226,
-                0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        .nav-btn.prev:hover {
-            background: linear-gradient(145deg, #ec7063, #e74c3c);
-        }
-        
-        .nav-btn:disabled {
-            background: linear-gradient(145deg, #bdc3c7, #95a5a6);
-            box-shadow: 
-                0 2px 0 #7f8c8d,
-                0 3px 6px rgba(0,0,0,0.1);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
-            color: white;
-            box-shadow: 
-                0 2px 4px rgba(0,0,0,0.1);
-            width: 100%;
         }
         
         .btn:hover {
@@ -501,12 +505,17 @@
                 gap: 8px;
             }
             
-            .controls-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch;
             }
             
-            .form-group.aluno {
-                grid-column: 1 / -1;
+            .nav-btn {
+                max-width: 100%;
+            }
+            
+            .controls-center {
+                width: 100%;
             }
             
             .bimester-header {
@@ -535,11 +544,16 @@
                 grid-column: 2 / 3;
                 grid-row: 2 / 3;
             }
+            
+            .form-group {
+                min-width: 150px;
+            }
         }
         
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
+                padding-top: 90px;
             }
             
             .results-container {
@@ -557,17 +571,13 @@
                 grid-row: 3 / 4;
             }
             
-            .controls-grid {
-                grid-template-columns: 1fr;
+            .controls-center {
+                flex-direction: column;
+                gap: 10px;
             }
             
-            .nav-container {
-                order: 0;
-                grid-column: 1 / -1;
-            }
-            
-            .form-group.btn-container {
-                grid-column: 1 / -1;
+            .form-group {
+                min-width: 100%;
             }
             
             .bimester-header {
@@ -597,12 +607,9 @@
                 grid-row: 5 / 6;
             }
             
-            .nav-container {
-                flex-direction: column;
-            }
-            
-            .nav-btn, .btn {
+            .nav-btn {
                 min-width: 100%;
+                max-width: 100%;
             }
             
             .bimester-header {
@@ -624,11 +631,11 @@
         @media (max-width: 400px) {
             .container {
                 padding: 8px;
+                padding-top: 85px;
             }
             
             header {
                 padding: 10px 5px;
-                border-radius: 8px 8px 0 0;
             }
             
             h1 {
@@ -685,29 +692,30 @@
         </header>
         
         <div class="controls-panel">
-            <div class="controls-grid">
-                <div class="nav-container">
-                    <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
-                    <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
+            <div class="controls-row">
+                <button id="prev-btn" class="nav-btn prev" disabled>← VOLTAR</button>
+                
+                <div class="controls-center">
+                    <div class="form-group turma">
+                        <label for="class-select">Selecione a Turma:</label>
+                        <select id="class-select">
+                            <option value="">-- Selecione uma turma --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group aluno">
+                        <label for="student-select">Selecione o Aluno:</label>
+                        <select id="student-select" disabled>
+                            <option value="">-- Primeiro selecione uma turma --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group btn-container">
+                        <button id="load-data" class="btn" disabled>Carregar Dados</button>
+                    </div>
                 </div>
                 
-                <div class="form-group turma">
-                    <label for="class-select">Selecione a Turma:</label>
-                    <select id="class-select">
-                        <option value="">-- Selecione uma turma --</option>
-                    </select>
-                </div>
-                
-                <div class="form-group aluno">
-                    <label for="student-select">Selecione o Aluno:</label>
-                    <select id="student-select" disabled>
-                        <option value="">-- Primeiro selecione uma turma --</option>
-                    </select>
-                </div>
-                
-                <div class="form-group btn-container">
-                    <button id="load-data" class="btn" disabled>Carregar Dados</button>
-                </div>
+                <button id="next-btn" class="nav-btn next" disabled>AVANÇAR →</button>
             </div>
         </div>
         
